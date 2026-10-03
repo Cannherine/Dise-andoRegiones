@@ -52,7 +52,7 @@ public List<Arista> obtenerTodasAristas(){
 	return todasAristas;
 }
 
-public List <Vertice> obtenerVertice (){
+public List <Vertice> obtenerVertices (){
 	return new ArrayList<> (adyacencias.keySet());
 }
 }

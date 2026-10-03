@@ -1,20 +1,17 @@
 package negocio;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class TeoremaKruskal {
 
     
     public static Grafo calcularAGM(Grafo grafo) {
         Grafo agm = new Grafo();
-        List<Vertice> vertices = grafo.obtenerVertice();
+        List<Vertice> vertices = grafo.obtenerVertices();
 
         // 1. Agregar todos los vértices de las provincias al AGM
         for (Vertice v : vertices) {
@@ -42,7 +39,7 @@ public class TeoremaKruskal {
 
     
     public static List<List<Vertice>> generarRegiones(Grafo grafo, int k) {
-        List<Vertice> vertices = grafo.obtenerVertice();
+        List<Vertice> vertices = grafo.obtenerVertices();
 
         if (k <= 0 || k > vertices.size()) {
             throw new IllegalArgumentException("El número de regiones k debe estar entre 1 y la cantidad total de vértices.");
