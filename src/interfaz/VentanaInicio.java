@@ -72,10 +72,9 @@ public class VentanaInicio extends JFrame {
         panelDatos.add(lblTipo);
 
         comboTipo = new JComboBox<>();
-        comboTipo.addItem("Continentes");
-        comboTipo.addItem("Países");
-        comboTipo.addItem("Provincias");
-        comboTipo.addItem("Localidades");
+        comboTipo.addItem("Continente");
+        comboTipo.addItem("Pais");
+        comboTipo.addItem("Provincia");
         comboTipo.setSelectedIndex(-1);
         panelDatos.add(comboTipo);
 
@@ -131,8 +130,7 @@ public class VentanaInicio extends JFrame {
                 return;
             }
 
-            VentanaPrincipal ventana = new VentanaPrincipal();
-            ventana.setVisible(true);
+            VentanaPrincipal ventana = new VentanaPrincipal(tipo, territorio);            ventana.setVisible(true);
             dispose();
 
         } catch (NumberFormatException ex) {

@@ -48,7 +48,12 @@ public class TeoremaKruskal {
         // PASO 1: Generar el Árbol Generador Mínimo T
         Grafo agm = calcularAGM(grafo);
         List<Arista> aristasAGM = new ArrayList<>(agm.obtenerTodasAristas());
-
+        ////agregeHOY
+        if (aristasAGM.size() != vertices.size() - 1) {
+            throw new IllegalArgumentException(
+                "El grafo debe ser conexo para generar regiones"
+            );
+        }
         // Ordenamos las aristas del AGM por peso (menor a mayor)
         aristasAGM.sort(Comparator.comparingInt(Arista::getPeso));
 
