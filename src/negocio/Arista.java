@@ -4,13 +4,13 @@ package negocio;
 public class Arista implements Comparable<Arista> { 
     private Vertice vertice1;
     private Vertice vertice2;
-    private int peso;
+    private double peso;
 
 //public Arista { // necesito: V1 , V2 y el peso
 	//private Vertice vertice1;
 	//private Vertice vertice2;
 	//private int peso;
-	public Arista (Vertice vertice1 , Vertice vertice2, int peso) {
+	public Arista (Vertice vertice1 , Vertice vertice2, double peso) {
 		this.vertice1= vertice1;
 		this.vertice2= vertice2;
 		this.peso = peso;                                               
@@ -23,14 +23,14 @@ public class Arista implements Comparable<Arista> {
 	        return vertice2;
 	    }
 
-	    public int getPeso() {
+	    public double getPeso() {
 	        return peso;
 	        }
 	    
 	 // Método necesario para poder ordenar las aristas de menor a mayor en Kruskal
 	    @Override
 	    public int compareTo(Arista otra) {
-	        return Integer.compare(this.peso, otra.peso);
+	        return Double.compare(this.peso, otra.peso);
 	    }
 	    
 	    @Override

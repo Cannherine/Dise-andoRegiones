@@ -62,7 +62,7 @@ public class VentanaPrincipal extends JFrame {
         });
     }
 
-    public VentanaPrincipal(String tipo, String territorio) {
+    public VentanaPrincipal(String tipo, String territorio, double latitud, double longitud) {
         grafo = new Grafo();
         final String singular;
         final String plural;
@@ -108,6 +108,8 @@ public class VentanaPrincipal extends JFrame {
         setLocationRelativeTo(null);
 
         contentPane = new JPanel();
+        contentPane.setBackground(new Color(0, 128, 192));
+        contentPane.setForeground(new Color(255, 255, 255));
         contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout(10, 10));
@@ -115,14 +117,16 @@ public class VentanaPrincipal extends JFrame {
         JPanel panelTitulo = new JPanel();
         contentPane.add(panelTitulo, BorderLayout.NORTH);
 
-        JLabel lblTitulo = new JLabel("DISEÑANDO REGIONES");
+        JLabel lblTitulo = new JLabel("DISEÑANDO REGIONESS");
         panelTitulo.add(lblTitulo);
 
         JPanel panelCentral = new JPanel();
+        panelCentral.setBackground(new Color(0, 128, 192));
         contentPane.add(panelCentral, BorderLayout.CENTER);
         panelCentral.setLayout(new GridLayout(1, 2, 10, 0));
 
         JPanel panelCarga = new JPanel();
+        panelCarga.setBackground(new Color(145, 200, 255));
         panelCentral.add(panelCarga);
         panelCarga.setLayout(new BorderLayout(10, 10));
 
@@ -130,10 +134,12 @@ public class VentanaPrincipal extends JFrame {
         panelCarga.add(lblCarga, BorderLayout.NORTH);
 
         JPanel panelContenido = new JPanel();
+        panelContenido.setBackground(new Color(0, 128, 192));
         panelCarga.add(panelContenido, BorderLayout.CENTER);
         panelContenido.setLayout(new BorderLayout(10, 10));
 
         JPanel panelCiudad = new JPanel();
+        panelCiudad.setBackground(new Color(145, 200, 255));
         panelContenido.add(panelCiudad, BorderLayout.NORTH);
         panelCiudad.setLayout(new GridLayout(4, 2, 10, 10));
 
@@ -175,6 +181,7 @@ public class VentanaPrincipal extends JFrame {
         panelLista.add(scrollCiudades, BorderLayout.CENTER);
 
         JPanel panelConexion = new JPanel();
+        panelConexion.setBackground(new Color(145, 200, 255));
         panelContenido.add(panelConexion, BorderLayout.SOUTH);
         panelConexion.setLayout(new GridLayout(5, 2, 10, 10));
         JLabel lblCiudad1 = new JLabel(singular + " 1:");
@@ -207,6 +214,9 @@ public class VentanaPrincipal extends JFrame {
         panelResultados.setLayout(new BorderLayout());
          mapa = new JMapViewer();
         panelResultados.add(mapa, BorderLayout.CENTER);
+        mapa.setDisplayPosition(new Coordinate (latitud, longitud),6);
+        
+      
 
         JLabel lblResultados = new JLabel("MAPA");
         panelResultados.add(lblResultados, BorderLayout.NORTH);
@@ -265,7 +275,7 @@ public class VentanaPrincipal extends JFrame {
             }
 
             try {
-                int peso = Integer.parseInt(txtPeso.getText().trim());
+                double peso = Double.parseDouble(txtPeso.getText().trim());
 
                 Arista arista = new Arista(v1, v2, peso);
 
@@ -284,7 +294,7 @@ public class VentanaPrincipal extends JFrame {
                 }
 
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this,"El peso debe ser un número entero");
+                JOptionPane.showMessageDialog(null,"El peso debe ser un número válido");
             }
 
         });
@@ -303,6 +313,9 @@ public class VentanaPrincipal extends JFrame {
 
                 List<List<Vertice>> regiones =  TeoremaKruskal.generarRegiones(grafo, k);
                 colorearRegiones(regiones);
+                ///pasar atade
+                actualizarAristasRegiones(regiones);
+                ///
                 StringBuilder resultado = new StringBuilder();
 
                 for (int i = 0; i < regiones.size(); i++) {
@@ -336,6 +349,25 @@ public class VentanaPrincipal extends JFrame {
         mapa.addMapPolygon(linea);
         mapa.repaint();
     }
+    private void actualizarAristasRegiones(List<List<Vertice>> regiones) {
+    	mapa.removeAllMapPolygons();
+    	Grafo agm = TeoremaKruskal.calcularAGM(grafo);
+    	for (Arista arista : agm.obtenerTodasAristas()) {
+
+            Vertice v1 = arista.getVertice1();
+            Vertice v2 = arista.getVertice2();
+            for (List<Vertice> region : regiones) {
+
+                if (region.contains(v1) && region.contains(v2)) {
+                	 dibujarConexion(v1, v2);
+                     break;
+                 }
+             }
+         }
+
+         mapa.repaint();
+                }
+    	
     private void colorearRegiones(List<List<Vertice>> regiones) {
 
         Color[] colores = {

@@ -20,7 +20,7 @@ public class TeoremaKruskal {
 
         // 2. Obtener todas las aristas y ordenarlas de menor a mayor peso
         List<Arista> aristas = new ArrayList<>(grafo.obtenerTodasAristas());
-        aristas.sort(Comparator.comparingInt(Arista::getPeso));
+        aristas.sort(Comparator.comparingDouble(Arista::getPeso));
 
         UnionFind uf = new UnionFind(vertices);
 
@@ -55,7 +55,7 @@ public class TeoremaKruskal {
             );
         }
         // Ordenamos las aristas del AGM por peso (menor a mayor)
-        aristasAGM.sort(Comparator.comparingInt(Arista::getPeso));
+        aristasAGM.sort(Comparator.comparingDouble(Arista::getPeso));
 
         // PASO 2: Eliminar las k - 1 aristas de mayor peso.
         // Nos quedamos con las primeras (totalAristas - (k - 1)) aristas más livianas.

@@ -129,7 +129,7 @@ public class VentanaInicio extends JFrame {
                 return;
             }
 
-            VentanaPrincipal ventana = new VentanaPrincipal(tipo, territorio);            ventana.setVisible(true);
+            VentanaPrincipal ventana = new VentanaPrincipal(tipo, territorio, latitud, longitud);            ventana.setVisible(true);
             dispose();
 
         } catch (NumberFormatException ex) {
