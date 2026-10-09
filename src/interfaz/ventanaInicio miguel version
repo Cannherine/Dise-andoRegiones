@@ -15,6 +15,7 @@ import javax.swing.border.EmptyBorder;
 
 public class VentanaInicio extends JFrame {
 
+    private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JComboBox<String> comboTipo;
     private JTextField txtTerritorio;
@@ -22,20 +23,17 @@ public class VentanaInicio extends JFrame {
     private JTextField txtLongitud;
 
     public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    VentanaInicio frame = new VentanaInicio();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+        EventQueue.invokeLater(() -> {
+            try {
+                VentanaInicio frame = new VentanaInicio();
+                frame.setVisible(true);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
 
     public VentanaInicio() {
-
         setTitle("Bienvenido - Diseñando Regiones");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 600, 420);
@@ -57,19 +55,16 @@ public class VentanaInicio extends JFrame {
         panelCentral.setLayout(new BorderLayout(10, 15));
 
         JLabel lblDescripcion = new JLabel("<html><center>" + "Este programa permite construir un grafo de territorios, "
-                + "establecer conexiones con pesos de similitud "+ "y agruparlos en regiones utilizando el algoritmo de Kruskal."
+                + "establecer conexiones con pesos de similitud y agruparlos en regiones utilizando el algoritmo de Kruskal."
                 + "</center></html>"
         );
-
         panelCentral.add(lblDescripcion, BorderLayout.NORTH);
 
         JPanel panelDatos = new JPanel();
         panelCentral.add(panelDatos, BorderLayout.CENTER);
         panelDatos.setLayout(new GridLayout(4, 2, 10, 15));
 
-        JLabel lblTipo = new JLabel("Tipo de territorio:");
-        panelDatos.add(lblTipo);
-
+        panelDatos.add(new JLabel("Tipo de territorio:"));
         comboTipo = new JComboBox<>();
         comboTipo.addItem("Continentes");
         comboTipo.addItem("Países");
@@ -78,21 +73,15 @@ public class VentanaInicio extends JFrame {
         comboTipo.setSelectedIndex(-1);
         panelDatos.add(comboTipo);
 
-        JLabel lblTerritorio = new JLabel("Área de estudio:");
-        panelDatos.add(lblTerritorio);
-
+        panelDatos.add(new JLabel("Área de estudio:"));
         txtTerritorio = new JTextField();
         panelDatos.add(txtTerritorio);
 
-        JLabel lblLatitud = new JLabel("Latitud del centro:");
-        panelDatos.add(lblLatitud);
-
+        panelDatos.add(new JLabel("Latitud del centro:"));
         txtLatitud = new JTextField();
         panelDatos.add(txtLatitud);
 
-        JLabel lblLongitud = new JLabel("Longitud del centro:");
-        panelDatos.add(lblLongitud);
-
+        panelDatos.add(new JLabel("Longitud del centro:"));
         txtLongitud = new JTextField();
         panelDatos.add(txtLongitud);
 
@@ -103,20 +92,17 @@ public class VentanaInicio extends JFrame {
         panelBoton.add(botonContinuar);
 
         botonContinuar.addActionListener(e -> continuar());
-
         getRootPane().setDefaultButton(botonContinuar);
     }
 
     private void continuar() {
-
         String tipo = (String) comboTipo.getSelectedItem();
         String territorio = txtTerritorio.getText().trim();
         String latitudTexto = txtLatitud.getText().trim();
         String longitudTexto = txtLongitud.getText().trim();
 
         if (tipo == null || territorio.isEmpty() || latitudTexto.isEmpty() || longitudTexto.isEmpty()) {
-
-            JOptionPane.showMessageDialog(this, "Debe completar todos los campos para continuar");
+            JOptionPane.showMessageDialog(this, "Debe completar todos los campos para continuar.");
             return;
         }
 
@@ -124,19 +110,17 @@ public class VentanaInicio extends JFrame {
             double latitud = Double.parseDouble(latitudTexto);
             double longitud = Double.parseDouble(longitudTexto);
 
-            if (!Double.isFinite(latitud) || !Double.isFinite(longitud) || latitud < -90 || latitud > 90|| longitud < -180 || longitud > 180) {
-
-                JOptionPane.showMessageDialog(this, "Ingrese coordenadas válidas. " + "Latitud: -90 a 90. " + "Longitud: -180 a 180.");
+            if (!Double.isFinite(latitud) || !Double.isFinite(longitud) || latitud < -90 || latitud > 90 || longitud < -180 || longitud > 180) {
+                JOptionPane.showMessageDialog(this, "Ingrese coordenadas válidas.\nLatitud: -90 a 90.\nLongitud: -180 a 180.");
                 return;
             }
 
-            VentanaPrincipal ventana = new VentanaPrincipal();
+            VentanaPrincipal ventana = new VentanaPrincipal(latitud, longitud);
             ventana.setVisible(true);
             dispose();
 
         } catch (NumberFormatException ex) {
-
-            JOptionPane.showMessageDialog(this, "Las coordenadas deben ser números decimales válidos");
+            JOptionPane.showMessageDialog(this, "Las coordenadas deben ser números decimales válidos.");
         }
     }
 }

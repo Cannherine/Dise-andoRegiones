@@ -4,13 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -18,8 +15,9 @@ import javax.swing.border.EmptyBorder;
 
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 
-import java.util.Map;
-
+import javax.swing.JOptionPane;
+import javax.swing.JList;
+import javax.swing.DefaultListModel;
 import negocio.Grafo;
 import negocio.Vertice;
 
@@ -37,13 +35,22 @@ public class VentanaPrincipal extends JFrame {
     private JList<String> listaCiudades;
     private JComboBox<Vertice> comboCiudad1;
     private JComboBox<Vertice> comboCiudad2;
-	private String tipo;
 
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    VentanaPrincipal frame = new VentanaPrincipal();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
+    public VentanaPrincipal() {
 
-    public VentanaPrincipal(String tipo, String territorio, double latitud, double longitud) {
-        this.tipo = tipo;
-    	
         grafo = new Grafo();
 
         setTitle("Diseñando Regiones");
@@ -80,8 +87,8 @@ public class VentanaPrincipal extends JFrame {
         JPanel panelCiudad = new JPanel();
         panelContenido.add(panelCiudad, BorderLayout.NORTH);
         panelCiudad.setLayout(new GridLayout(4, 2, 10, 10));
-        
-        JLabel lblNombre = new JLabel("Nombre de " + tipo + ":");
+
+        JLabel lblNombre = new JLabel("Nombre Ciudad:");
         panelCiudad.add(lblNombre);
 
         txtNombre = new JTextField();
@@ -121,13 +128,13 @@ public class VentanaPrincipal extends JFrame {
         panelContenido.add(panelConexion, BorderLayout.SOUTH);
         panelConexion.setLayout(new GridLayout(4, 2, 10, 10));
 
-        JLabel lblCiudad1 = new JLabel(tipo + " 1:");
+        JLabel lblCiudad1 = new JLabel("Ciudad 1:");
         panelConexion.add(lblCiudad1);
 
         comboCiudad1 = new JComboBox<>();
         panelConexion.add(comboCiudad1);
 
-        JLabel lblCiudad2 = new JLabel(tipo + " 2:");
+        JLabel lblCiudad2 = new JLabel("Ciudad 2:");
         panelConexion.add(lblCiudad2);
 
         comboCiudad2 = new JComboBox<>();
@@ -147,7 +154,7 @@ public class VentanaPrincipal extends JFrame {
         JPanel panelResultados = new JPanel();
         panelCentral.add(panelResultados);
         panelResultados.setLayout(new BorderLayout());
-        mapa = new JMapViewer();
+         mapa = new JMapViewer();
         panelResultados.add(mapa, BorderLayout.CENTER);
 
         JLabel lblResultados = new JLabel("MAPA");
@@ -163,8 +170,8 @@ public class VentanaPrincipal extends JFrame {
             }
 
             try {
-                double x = Double.parseDouble(txtX.getText().trim());
-                double y = Double.parseDouble(txtX.getText().trim());
+            	double x = Double.parseDouble(txtX.getText().trim());
+            	double y = Double.parseDouble(txtY.getText().trim());
 
                 Vertice ciudad = new Vertice(nombre, x, y);
                 boolean agregado = grafo.agregarVertice(ciudad);
@@ -174,14 +181,14 @@ public class VentanaPrincipal extends JFrame {
                     comboCiudad1.addItem(ciudad);
                     comboCiudad2.addItem(ciudad);
 
-                    JOptionPane.showMessageDialog(this, tipo + " agregada correctamente");
+                    JOptionPane.showMessageDialog(this, "Ciudad agregada correctamente");
 
                     txtNombre.setText("");
                     txtX.setText("");
                     txtY.setText("");
 
                 } else {
-                    JOptionPane.showMessageDialog(this, "El/La " + tipo +  " ya existe");
+                    JOptionPane.showMessageDialog(this, "La ciudad ya existe");
                 }
 
             } catch (NumberFormatException ex) {

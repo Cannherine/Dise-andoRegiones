@@ -56,5 +56,11 @@ class VerticeTest {
         Vertice v = new Vertice("A");
         assertNotEquals("A", v); // Evalúa (!(obj instanceof Vertice))
     }
+    @Test
+    void coordenadasSeGuardanCorrectamente() {
+        Vertice v = new Vertice("Buenos Aires", 250, 180);
 
+        assertEquals(250, v.getX());
+        assertEquals(180, v.getY());
+    }
 }
