@@ -8,81 +8,66 @@ import java.util.Map;
 
 public class TeoremaKruskal {
 
-    
-    public static Grafo calcularAGM(Grafo grafo) {
-        Grafo agm = new Grafo();
-        List<Vertice> vertices = grafo.obtenerVertices();
 
-        // 1. Agregar todos los vértices de las provincias al AGM
-        for (Vertice v : vertices) {
-            agm.agregarVertice(v);
-        }
+	public static Grafo calcularAGM(Grafo grafo) {
+		Grafo agm = new Grafo();
+		List<Vertice> vertices = grafo.obtenerVertices();
 
-        // 2. Obtener todas las aristas y ordenarlas de menor a mayor peso
-        List<Arista> aristas = new ArrayList<>(grafo.obtenerTodasAristas());
-        aristas.sort(Comparator.comparingDouble(Arista::getPeso));
+		for (Vertice v : vertices) {
+			agm.agregarVertice(v);
+		}
 
-        UnionFind uf = new UnionFind(vertices);
+		List<Arista> aristas = new ArrayList<>(grafo.obtenerTodasAristas());
+		aristas.sort(Comparator.comparingDouble(Arista::getPeso));
 
-        // 3. Agregar aristas sin formar ciclos
-        for (Arista arista : aristas) {
-            Vertice v1 = arista.getVertice1();
-            Vertice v2 = arista.getVertice2();
+		UnionFind uf = new UnionFind(vertices);
 
-            if (uf.union(v1, v2)) {
-                agm.agregarArista(arista);
-            }
-        }
+		for (Arista arista : aristas) {
+			Vertice v1 = arista.getVertice1();
+			Vertice v2 = arista.getVertice2();
 
-        return agm;
-    }
+			if (uf.union(v1, v2)) {
+				agm.agregarArista(arista);
+			}
+		}
 
-    
-    public static List<List<Vertice>> generarRegiones(Grafo grafo, int k) {
-        List<Vertice> vertices = grafo.obtenerVertices();
+		return agm;
+	}
 
-        if (k <= 0 || k > vertices.size()) {
-            throw new IllegalArgumentException("El número de regiones k debe estar entre 1 y la cantidad total de vértices.");
-        }
 
-        // PASO 1: Generar el Árbol Generador Mínimo T
-        Grafo agm = calcularAGM(grafo);
-        List<Arista> aristasAGM = new ArrayList<>(agm.obtenerTodasAristas());
-        ////agregeHOY
-        if (aristasAGM.size() != vertices.size() - 1) {
-            throw new IllegalArgumentException(
-                "El grafo debe ser conexo para generar regiones"
-            );
-        }
-        // Ordenamos las aristas del AGM por peso (menor a mayor)
-        aristasAGM.sort(Comparator.comparingDouble(Arista::getPeso));
+	public static List<List<Vertice>> generarRegiones(Grafo grafo, int k) {
+		List<Vertice> vertices = grafo.obtenerVertices();
 
-        // PASO 2: Eliminar las k - 1 aristas de mayor peso.
-        // Nos quedamos con las primeras (totalAristas - (k - 1)) aristas más livianas.
-        int aristasAConservar = aristasAGM.size() - (k - 1);
+		if (k <= 0 || k > vertices.size()) {
+			throw new IllegalArgumentException("El número de regiones k debe estar entre 1 y la cantidad total de vértices.");
+		}
 
-        // PASO 3: Construir las k componentes conexas conexas resultantes
-        UnionFind ufRegiones = new UnionFind(vertices);
+		Grafo agm = calcularAGM(grafo);
+		List<Arista> aristasAGM = new ArrayList<>(agm.obtenerTodasAristas());
+		if (aristasAGM.size() != vertices.size() - 1) {
+			throw new IllegalArgumentException(
+					"El grafo debe ser conexo para generar regiones"
+					);
+		}
+		aristasAGM.sort(Comparator.comparingDouble(Arista::getPeso));
 
-        for (int i = 0; i < aristasAConservar; i++) {
-            Arista a = aristasAGM.get(i);
-            ufRegiones.union(a.getVertice1(), a.getVertice2());
-        }
+		int aristasAConservar = aristasAGM.size() - (k - 1);
 
-        // Agrupar los vértices según su representante común en UnionFind
-     // Declaración usando List en lugar de Set:
-        Map<Vertice, List<Vertice>> regionesMap = new HashMap<>();
+		UnionFind ufRegiones = new UnionFind(vertices);
 
-        for (Vertice v : vertices) {
-            Vertice representante = ufRegiones.buscar(v);
-            // Si el representante no está en el mapa, creamos un nuevo ArrayList vacío
-            regionesMap.putIfAbsent(representante, new ArrayList<>());
-            
-            // Agregamos el vértice a la lista correspondiente a su región
-            regionesMap.get(representante).add(v);
-        }
+		for (int i = 0; i < aristasAConservar; i++) {
+			Arista a = aristasAGM.get(i);
+			ufRegiones.union(a.getVertice1(), a.getVertice2());
+		}
 
-        // Retorno (esto devolverá un List<List<Vertice>>):
-        return new ArrayList<>(regionesMap.values());
-    }
+		Map<Vertice, List<Vertice>> regionesMap = new HashMap<>();
+
+		for (Vertice v : vertices) {
+			Vertice representante = ufRegiones.buscar(v);
+			regionesMap.putIfAbsent(representante, new ArrayList<>());
+			regionesMap.get(representante).add(v);
+		}
+
+		return new ArrayList<>(regionesMap.values());
+	}
 }
