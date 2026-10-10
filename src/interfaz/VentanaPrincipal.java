@@ -45,9 +45,11 @@ public class VentanaPrincipal extends JFrame {
 
     private Grafo grafo;
     private DefaultListModel<String> modeloCiudades;
+    private DefaultListModel<String> modeloConexiones;
     private JList<String> listaCiudades;
     private JComboBox<Vertice> comboCiudad1;
     private JComboBox<Vertice> comboCiudad2;
+    private List<List<Vertice>> regionesGuardadas;
 
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
@@ -104,12 +106,10 @@ public class VentanaPrincipal extends JFrame {
         
         setTitle("Diseñando Regiones");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 1000, 650);
+        setBounds(100, 100, 1100, 720);
         setLocationRelativeTo(null);
 
         contentPane = new JPanel();
-        contentPane.setBackground(new Color(0, 128, 192));
-        contentPane.setForeground(new Color(255, 255, 255));
         contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout(10, 10));
@@ -117,16 +117,14 @@ public class VentanaPrincipal extends JFrame {
         JPanel panelTitulo = new JPanel();
         contentPane.add(panelTitulo, BorderLayout.NORTH);
 
-        JLabel lblTitulo = new JLabel("DISEÑANDO REGIONESS");
+        JLabel lblTitulo = new JLabel("DISEÑANDO REGIONES");
         panelTitulo.add(lblTitulo);
 
         JPanel panelCentral = new JPanel();
-        panelCentral.setBackground(new Color(0, 128, 192));
         contentPane.add(panelCentral, BorderLayout.CENTER);
         panelCentral.setLayout(new GridLayout(1, 2, 10, 0));
 
         JPanel panelCarga = new JPanel();
-        panelCarga.setBackground(new Color(145, 200, 255));
         panelCentral.add(panelCarga);
         panelCarga.setLayout(new BorderLayout(10, 10));
 
@@ -134,12 +132,10 @@ public class VentanaPrincipal extends JFrame {
         panelCarga.add(lblCarga, BorderLayout.NORTH);
 
         JPanel panelContenido = new JPanel();
-        panelContenido.setBackground(new Color(0, 128, 192));
         panelCarga.add(panelContenido, BorderLayout.CENTER);
         panelContenido.setLayout(new BorderLayout(10, 10));
 
         JPanel panelCiudad = new JPanel();
-        panelCiudad.setBackground(new Color(145, 200, 255));
         panelContenido.add(panelCiudad, BorderLayout.NORTH);
         panelCiudad.setLayout(new GridLayout(4, 2, 10, 10));
 
@@ -165,25 +161,48 @@ public class VentanaPrincipal extends JFrame {
 
         JButton botonAgregarCiudades = new JButton("Agregar " + singular);
         panelCiudad.add(botonAgregarCiudades);
-
+///////////////////////////////// cuadro vertical
         JPanel panelLista = new JPanel();
         panelContenido.add(panelLista, BorderLayout.CENTER);
-        panelLista.setLayout(new BorderLayout(5, 5));
-
+        panelLista.setLayout(new GridLayout(1, 2, 10, 5));
         
+        JPanel panelProvincias = new JPanel(new BorderLayout(5, 5));
+
         JLabel lblLista = new JLabel(plural + " " + terminacion);
-        panelLista.add(lblLista, BorderLayout.NORTH);
+        panelProvincias.add(lblLista, BorderLayout.NORTH);
 
         modeloCiudades = new DefaultListModel<>();
         listaCiudades = new JList<>(modeloCiudades);
 
         JScrollPane scrollCiudades = new JScrollPane(listaCiudades);
-        panelLista.add(scrollCiudades, BorderLayout.CENTER);
+        panelProvincias.add(scrollCiudades, BorderLayout.CENTER);
+
+        panelLista.add(panelProvincias);
+        //// agregre esto para las listas 
+
+JPanel panelConexionesLista = new JPanel();
+panelConexionesLista.setLayout(new BorderLayout(5, 5));
+
+JLabel lblConexiones = new JLabel("CONEXIONES Y PESOS");
+panelConexionesLista.add(lblConexiones, BorderLayout.NORTH);
+
+modeloConexiones = new DefaultListModel<>();
+
+JList<String> listaConexiones = new JList<>(modeloConexiones);
+
+JScrollPane scrollConexiones = new JScrollPane(listaConexiones);
+panelConexionesLista.add(scrollConexiones, BorderLayout.CENTER);
+
+//panelConexionesLista.setPreferredSize(
+//    new java.awt.Dimension(0, 115)
+//);
+panelLista.add(panelConexionesLista);
+panelLista.add(panelConexionesLista, BorderLayout.SOUTH);
+
 
         JPanel panelConexion = new JPanel();
-        panelConexion.setBackground(new Color(145, 200, 255));
         panelContenido.add(panelConexion, BorderLayout.SOUTH);
-        panelConexion.setLayout(new GridLayout(5, 2, 10, 10));
+        panelConexion.setLayout(new GridLayout(6, 2, 10, 5));
         JLabel lblCiudad1 = new JLabel(singular + " 1:");
         panelConexion.add(lblCiudad1);
 
@@ -209,6 +228,11 @@ public class VentanaPrincipal extends JFrame {
         JButton botonGenerarRegiones = new JButton("Generar Regiones");
         panelConexion.add(new JLabel(""));
         panelConexion.add(botonGenerarRegiones);
+        //// para el born de la lista regiones 
+        JButton botonConsultarRegiones = new JButton("Consultar Regiones");
+        panelConexion.add(new JLabel(""));
+        panelConexion.add(botonConsultarRegiones);
+        
         JPanel panelResultados = new JPanel();
         panelCentral.add(panelResultados);
         panelResultados.setLayout(new BorderLayout());
@@ -275,8 +299,7 @@ public class VentanaPrincipal extends JFrame {
             }
 
             try {
-                double peso = Double.parseDouble(txtPeso.getText().trim());
-
+            	double peso = Double.parseDouble(txtPeso.getText().trim());
                 Arista arista = new Arista(v1, v2, peso);
 
                 boolean agregada = grafo.agregarArista(arista);
@@ -284,7 +307,7 @@ public class VentanaPrincipal extends JFrame {
                 if (agregada) {
 
                     dibujarConexion(v1, v2);
-
+                    modeloConexiones.addElement( v1.getNombre() + " - " +  v2.getNombre() + " | Peso: " + peso 	);
                     JOptionPane.showMessageDialog(this,   "Conexión agregada correctamente");
 
                     txtPeso.setText("");
@@ -294,7 +317,7 @@ public class VentanaPrincipal extends JFrame {
                 }
 
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null,"El peso debe ser un número válido");
+                JOptionPane.showMessageDialog(null,"El peso debe ser un numero valido ");
             }
 
         });
@@ -312,6 +335,7 @@ public class VentanaPrincipal extends JFrame {
                 int k = Integer.parseInt(entrada.trim());
 
                 List<List<Vertice>> regiones =  TeoremaKruskal.generarRegiones(grafo, k);
+                regionesGuardadas = regiones; /// pasar a tadeob
                 colorearRegiones(regiones);
                 ///pasar atade
                 actualizarAristasRegiones(regiones);
@@ -337,7 +361,34 @@ public class VentanaPrincipal extends JFrame {
             } catch (IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(this,  ex.getMessage());
             }
-        });
+        });      
+            /////////////////////ultomo
+
+botonConsultarRegiones.addActionListener(e -> {
+
+    if (regionesGuardadas == null) {
+        JOptionPane.showMessageDialog( this, "Primero debés generar las regiones." );
+        return;
+    }
+
+    StringBuilder resultado = new StringBuilder();
+
+    for (int i = 0; i < regionesGuardadas.size(); i++) {
+
+        resultado.append("REGIÓN ") .append(i + 1) .append(":\n");
+
+        for (Vertice v : regionesGuardadas.get(i)) {
+            resultado.append(" - ") .append(v.getNombre()).append("\n");
+        }
+
+        resultado.append("\n");
+    }
+
+    JOptionPane.showMessageDialog(
+        this, resultado.toString(),"Consultar Regiones", JOptionPane.INFORMATION_MESSAGE );
+});
+           
+        
     }
     private void dibujarConexion(Vertice v1, Vertice v2) {
 
