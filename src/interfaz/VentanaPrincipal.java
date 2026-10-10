@@ -29,429 +29,406 @@ import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 
 import negocio.Arista;
 import java.util.List;
-import negocio.TeoremaKruskal;
+import negocio.AlgoritmoKruskal;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
 public class VentanaPrincipal extends JFrame {
 
-    private JPanel contentPane;
-    private JTextField txtNombre;
-    private JTextField txtX;
-    private JTextField txtY;
-    private JTextField txtPeso;
-    private JMapViewer mapa;
-
-    private Grafo grafo;
-    private DefaultListModel<String> modeloCiudades;
-    private DefaultListModel<String> modeloConexiones;
-    private JList<String> listaCiudades;
-    private JComboBox<Vertice> comboCiudad1;
-    private JComboBox<Vertice> comboCiudad2;
-    private List<List<Vertice>> regionesGuardadas;
-
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                	VentanaInicio frame = new VentanaInicio();
-                	frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public VentanaPrincipal(String tipo, String territorio, double latitud, double longitud) {
-        grafo = new Grafo();
-        final String singular;
-        final String plural;
-        final String terminacion;
-
-        switch (tipo) {
-            case "Continente":
-                singular = "País";
-                plural = "PAÍSES";
-                terminacion = "CARGADOS";
-                break;
-
-            case "Pais":
-                singular = "Provincia";
-                plural = "PROVINCIAS";
-                terminacion = "CARGADAS";
-                break;
-
-            case "Provincia":
-                singular = "Localidad";
-                plural = "LOCALIDADES";
-                terminacion = "CARGADAS";
-                break;
-
-           // case "Localidades":
-            //    singular = "Localidad";
-             //   plural = "LOCALIDADES";
-               // terminacion = "CARGADAS";
-              //  break;
-
-            default:
-                singular = "Territorio";
-                plural = "TERRITORIOS";
-                terminacion = "CARGADOS";
-                break;
-        }
-
-        
-        
-        setTitle("Diseñando Regiones");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 1100, 720);
-        setLocationRelativeTo(null);
-
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
-        setContentPane(contentPane);
-        contentPane.setLayout(new BorderLayout(10, 10));
-
-        JPanel panelTitulo = new JPanel();
-        contentPane.add(panelTitulo, BorderLayout.NORTH);
-
-        JLabel lblTitulo = new JLabel("DISEÑANDO REGIONES");
-        panelTitulo.add(lblTitulo);
-
-        JPanel panelCentral = new JPanel();
-        contentPane.add(panelCentral, BorderLayout.CENTER);
-        panelCentral.setLayout(new GridLayout(1, 2, 10, 0));
-
-        JPanel panelCarga = new JPanel();
-        panelCentral.add(panelCarga);
-        panelCarga.setLayout(new BorderLayout(10, 10));
-
-        JLabel lblCarga = new JLabel("CARGA DEL GRAFO");
-        panelCarga.add(lblCarga, BorderLayout.NORTH);
-
-        JPanel panelContenido = new JPanel();
-        panelCarga.add(panelContenido, BorderLayout.CENTER);
-        panelContenido.setLayout(new BorderLayout(10, 10));
-
-        JPanel panelCiudad = new JPanel();
-        panelContenido.add(panelCiudad, BorderLayout.NORTH);
-        panelCiudad.setLayout(new GridLayout(4, 2, 10, 10));
+	private JPanel contentPane;
+	private JTextField txtNombre;
+	private JTextField txtX;
+	private JTextField txtY;
+	private JTextField txtPeso;
+	private JMapViewer mapa;
+
+	private Grafo grafo;
+	private DefaultListModel<String> modeloCiudades;
+	private DefaultListModel<String> modeloConexiones;
+	private JList<String> listaCiudades;
+	private JComboBox<Vertice> comboCiudad1;
+	private JComboBox<Vertice> comboCiudad2;
+	private List<List<Vertice>> regionesGuardadas;
+
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					VentanaInicio frame = new VentanaInicio();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	public VentanaPrincipal(String tipo, String territorio, double latitud, double longitud) {
+		grafo = new Grafo();
+		final String singular;
+		final String plural;
+		final String terminacion;
+
+		switch (tipo) {
+		case "Continente":
+			singular = "País";
+			plural = "PAÍSES";
+			terminacion = "CARGADOS";
+			break;
+
+		case "Pais":
+			singular = "Provincia";
+			plural = "PROVINCIAS";
+			terminacion = "CARGADAS";
+			break;
+
+		case "Provincia":
+			singular = "Localidad";
+			plural = "LOCALIDADES";
+			terminacion = "CARGADAS";
+			break;
+
+		default:
+			singular = "Territorio";
+			plural = "TERRITORIOS";
+			terminacion = "CARGADOS";
+			break;
+		}
+
+		setTitle("Diseñando Regiones");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1100, 720);
+		setLocationRelativeTo(null);
+
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
+		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(10, 10));
+
+		JPanel panelTitulo = new JPanel();
+		contentPane.add(panelTitulo, BorderLayout.NORTH);
+
+		JLabel lblTitulo = new JLabel("DISEÑANDO REGIONES");
+		panelTitulo.add(lblTitulo);
+
+		JPanel panelCentral = new JPanel();
+		contentPane.add(panelCentral, BorderLayout.CENTER);
+		panelCentral.setLayout(new GridLayout(1, 2, 10, 0));
+
+		JPanel panelCarga = new JPanel();
+		panelCentral.add(panelCarga);
+		panelCarga.setLayout(new BorderLayout(10, 10));
+
+		JLabel lblCarga = new JLabel("CARGA DEL GRAFO");
+		panelCarga.add(lblCarga, BorderLayout.NORTH);
+
+		JPanel panelContenido = new JPanel();
+		panelCarga.add(panelContenido, BorderLayout.CENTER);
+		panelContenido.setLayout(new BorderLayout(10, 10));
+
+		JPanel panelCiudad = new JPanel();
+		panelContenido.add(panelCiudad, BorderLayout.NORTH);
+		panelCiudad.setLayout(new GridLayout(4, 2, 10, 10));
+
+		JLabel lblNombre = new JLabel("Nombre de " + singular + ":");
+		panelCiudad.add(lblNombre);
+
+		txtNombre = new JTextField();
+		panelCiudad.add(txtNombre);
+
+		JLabel lblX = new JLabel("Coordenada X:");
+		panelCiudad.add(lblX);
 
-        JLabel lblNombre = new JLabel("Nombre de " + singular + ":");
-        panelCiudad.add(lblNombre);
+		txtX = new JTextField();
+		panelCiudad.add(txtX);
 
-        txtNombre = new JTextField();
-        panelCiudad.add(txtNombre);
+		JLabel lblY = new JLabel("Coordenada Y:");
+		panelCiudad.add(lblY);
 
-        JLabel lblX = new JLabel("Coordenada X:");
-        panelCiudad.add(lblX);
+		txtY = new JTextField();
+		panelCiudad.add(txtY);
 
-        txtX = new JTextField();
-        panelCiudad.add(txtX);
+		panelCiudad.add(new JLabel(""));
 
-        JLabel lblY = new JLabel("Coordenada Y:");
-        panelCiudad.add(lblY);
+		JButton botonAgregarCiudades = new JButton("Agregar " + singular);
+		panelCiudad.add(botonAgregarCiudades);
+		///////////////////////////////// cuadro vertical
+		JPanel panelLista = new JPanel();
+		panelContenido.add(panelLista, BorderLayout.CENTER);
+		panelLista.setLayout(new GridLayout(1, 2, 10, 5));
 
-        txtY = new JTextField();
-        panelCiudad.add(txtY);
+		JPanel panelProvincias = new JPanel(new BorderLayout(5, 5));
 
-        panelCiudad.add(new JLabel(""));
+		JLabel lblLista = new JLabel(plural + " " + terminacion);
+		panelProvincias.add(lblLista, BorderLayout.NORTH);
 
-        JButton botonAgregarCiudades = new JButton("Agregar " + singular);
-        panelCiudad.add(botonAgregarCiudades);
-///////////////////////////////// cuadro vertical
-        JPanel panelLista = new JPanel();
-        panelContenido.add(panelLista, BorderLayout.CENTER);
-        panelLista.setLayout(new GridLayout(1, 2, 10, 5));
-        
-        JPanel panelProvincias = new JPanel(new BorderLayout(5, 5));
+		modeloCiudades = new DefaultListModel<>();
+		listaCiudades = new JList<>(modeloCiudades);
 
-        JLabel lblLista = new JLabel(plural + " " + terminacion);
-        panelProvincias.add(lblLista, BorderLayout.NORTH);
+		JScrollPane scrollCiudades = new JScrollPane(listaCiudades);
+		panelProvincias.add(scrollCiudades, BorderLayout.CENTER);
 
-        modeloCiudades = new DefaultListModel<>();
-        listaCiudades = new JList<>(modeloCiudades);
+		panelLista.add(panelProvincias);
+		//// agregre esto para las listas
 
-        JScrollPane scrollCiudades = new JScrollPane(listaCiudades);
-        panelProvincias.add(scrollCiudades, BorderLayout.CENTER);
+		JPanel panelConexionesLista = new JPanel();
+		panelConexionesLista.setLayout(new BorderLayout(5, 5));
 
-        panelLista.add(panelProvincias);
-        //// agregre esto para las listas 
+		JLabel lblConexiones = new JLabel("CONEXIONES Y PESOS");
+		panelConexionesLista.add(lblConexiones, BorderLayout.NORTH);
 
-JPanel panelConexionesLista = new JPanel();
-panelConexionesLista.setLayout(new BorderLayout(5, 5));
+		modeloConexiones = new DefaultListModel<>();
 
-JLabel lblConexiones = new JLabel("CONEXIONES Y PESOS");
-panelConexionesLista.add(lblConexiones, BorderLayout.NORTH);
+		JList<String> listaConexiones = new JList<>(modeloConexiones);
 
-modeloConexiones = new DefaultListModel<>();
+		JScrollPane scrollConexiones = new JScrollPane(listaConexiones);
+		panelConexionesLista.add(scrollConexiones, BorderLayout.CENTER);
 
-JList<String> listaConexiones = new JList<>(modeloConexiones);
+		// panelConexionesLista.setPreferredSize(
+		// new java.awt.Dimension(0, 115)
+		// );
+		panelLista.add(panelConexionesLista);
+		panelLista.add(panelConexionesLista, BorderLayout.SOUTH);
 
-JScrollPane scrollConexiones = new JScrollPane(listaConexiones);
-panelConexionesLista.add(scrollConexiones, BorderLayout.CENTER);
+		JPanel panelConexion = new JPanel();
+		panelContenido.add(panelConexion, BorderLayout.SOUTH);
+		panelConexion.setLayout(new GridLayout(6, 2, 10, 5));
+		JLabel lblCiudad1 = new JLabel(singular + " 1:");
+		panelConexion.add(lblCiudad1);
 
-//panelConexionesLista.setPreferredSize(
-//    new java.awt.Dimension(0, 115)
-//);
-panelLista.add(panelConexionesLista);
-panelLista.add(panelConexionesLista, BorderLayout.SOUTH);
+		comboCiudad1 = new JComboBox<>();
+		panelConexion.add(comboCiudad1);
 
+		JLabel lblCiudad2 = new JLabel(singular + " 2:");
+		panelConexion.add(lblCiudad2);
 
-        JPanel panelConexion = new JPanel();
-        panelContenido.add(panelConexion, BorderLayout.SOUTH);
-        panelConexion.setLayout(new GridLayout(6, 2, 10, 5));
-        JLabel lblCiudad1 = new JLabel(singular + " 1:");
-        panelConexion.add(lblCiudad1);
+		comboCiudad2 = new JComboBox<>();
+		panelConexion.add(comboCiudad2);
 
-        comboCiudad1 = new JComboBox<>();
-        panelConexion.add(comboCiudad1);
+		JLabel lblPeso = new JLabel("Peso / similitud:");
+		panelConexion.add(lblPeso);
 
-        JLabel lblCiudad2 = new JLabel(singular + " 2:");
-        panelConexion.add(lblCiudad2);
+		txtPeso = new JTextField();
+		panelConexion.add(txtPeso);
 
-        comboCiudad2 = new JComboBox<>();
-        panelConexion.add(comboCiudad2);
+		panelConexion.add(new JLabel(""));
 
-        JLabel lblPeso = new JLabel("Peso / similitud:");
-        panelConexion.add(lblPeso);
+		JButton botonAgregarConexion = new JButton("Agregar Conexión");
+		panelConexion.add(botonAgregarConexion);
+		JButton botonGenerarRegiones = new JButton("Generar Regiones");
+		panelConexion.add(new JLabel(""));
+		panelConexion.add(botonGenerarRegiones);
+		//// para el born de la lista regiones
+		JButton botonConsultarRegiones = new JButton("Consultar Regiones");
+		panelConexion.add(new JLabel(""));
+		panelConexion.add(botonConsultarRegiones);
 
-        txtPeso = new JTextField();
-        panelConexion.add(txtPeso);
+		JPanel panelResultados = new JPanel();
+		panelCentral.add(panelResultados);
+		panelResultados.setLayout(new BorderLayout());
+		mapa = new JMapViewer();
+		panelResultados.add(mapa, BorderLayout.CENTER);
+		mapa.setDisplayPosition(new Coordinate(latitud, longitud), 6);
 
-        panelConexion.add(new JLabel(""));
+		JLabel lblResultados = new JLabel("MAPA");
+		panelResultados.add(lblResultados, BorderLayout.NORTH);
 
-        JButton botonAgregarConexion = new JButton("Agregar Conexión");
-        panelConexion.add(botonAgregarConexion);
-        JButton botonGenerarRegiones = new JButton("Generar Regiones");
-        panelConexion.add(new JLabel(""));
-        panelConexion.add(botonGenerarRegiones);
-        //// para el born de la lista regiones 
-        JButton botonConsultarRegiones = new JButton("Consultar Regiones");
-        panelConexion.add(new JLabel(""));
-        panelConexion.add(botonConsultarRegiones);
-        
-        JPanel panelResultados = new JPanel();
-        panelCentral.add(panelResultados);
-        panelResultados.setLayout(new BorderLayout());
-         mapa = new JMapViewer();
-        panelResultados.add(mapa, BorderLayout.CENTER);
-        mapa.setDisplayPosition(new Coordinate (latitud, longitud),6);
-        
-      
+		botonAgregarCiudades.addActionListener(e -> {
 
-        JLabel lblResultados = new JLabel("MAPA");
-        panelResultados.add(lblResultados, BorderLayout.NORTH);
+			String nombre = txtNombre.getText().trim();
 
-        botonAgregarCiudades.addActionListener(e -> {
+			if (nombre.isEmpty()) {
+				JOptionPane.showMessageDialog(this, "Ingresá el nombre de " + singular);
+				return;
+			}
 
-            String nombre = txtNombre.getText().trim();
+			try {
+				double x = Double.parseDouble(txtX.getText().trim());
+				double y = Double.parseDouble(txtY.getText().trim());
 
-            if (nombre.isEmpty()) {
-            	JOptionPane.showMessageDialog(this, "Ingresá el nombre de " + singular);
-                return;
-            }
+				Vertice ciudad = new Vertice(nombre, x, y);
+				boolean agregado = grafo.agregarVertice(ciudad);
 
-            try {
-            	double x = Double.parseDouble(txtX.getText().trim());
-            	double y = Double.parseDouble(txtY.getText().trim());
+				if (agregado) {
+					modeloCiudades.addElement(nombre);
+					comboCiudad1.addItem(ciudad);
+					comboCiudad2.addItem(ciudad);
 
-                Vertice ciudad = new Vertice(nombre, x, y);
-                boolean agregado = grafo.agregarVertice(ciudad);
+					MapMarkerDot marcador = new MapMarkerDot(nombre, new Coordinate(x, y));
 
-                if (agregado) {
-                    modeloCiudades.addElement(nombre);
-                    comboCiudad1.addItem(ciudad);
-                    comboCiudad2.addItem(ciudad);
-                    /////
-                    MapMarkerDot marcador = new MapMarkerDot(nombre, new Coordinate(x, y));
+					mapa.addMapMarker(marcador);
+					mapa.setDisplayPosition(new Coordinate(x, y), 6);
 
-                    mapa.addMapMarker(marcador);
-                   mapa.setDisplayPosition(new Coordinate(x, y), 6);
-                    ///
+					JOptionPane.showMessageDialog(this, singular + " agregado correctamente");
+					txtNombre.setText("");
+					txtX.setText("");
+					txtY.setText("");
+				} else {
+					JOptionPane.showMessageDialog(this, singular + " ya existe");
+				}
 
-                    JOptionPane.showMessageDialog(this, singular + " agregado correctamente");
-                    txtNombre.setText("");
-                    txtX.setText("");
-                    txtY.setText("");
-                } else {
-                	JOptionPane.showMessageDialog(this, singular + " ya existe");                }
+			} catch (NumberFormatException ex) {
+				JOptionPane.showMessageDialog(this, "Las coordenadas deben ser números decimales");
+			}
+		});
+		botonAgregarConexion.addActionListener(e -> {
 
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this,"Las coordenadas deben ser números decimales");
-            }
-        });
-        botonAgregarConexion.addActionListener(e -> {
+			Vertice v1 = (Vertice) comboCiudad1.getSelectedItem();
+			Vertice v2 = (Vertice) comboCiudad2.getSelectedItem();
 
-            Vertice v1 = (Vertice) comboCiudad1.getSelectedItem();
-            Vertice v2 = (Vertice) comboCiudad2.getSelectedItem();
+			if (v1 == null || v2 == null) {
+				JOptionPane.showMessageDialog(this, "Primero tenés que agregar dos vértices");
+				return;
+			}
 
-            if (v1 == null || v2 == null) {
-                JOptionPane.showMessageDialog(this,"Primero tenés que agregar dos vértices");
-                return;
-            }
+			if (v1.equals(v2)) {
+				JOptionPane.showMessageDialog(this, "No podés conectar un vértice consigo mismo");
+				return;
+			}
 
-            if (v1.equals(v2)) {
-                JOptionPane.showMessageDialog(this, "No podés conectar un vértice consigo mismo");
-                return;
-            }
+			try {
+				double peso = Double.parseDouble(txtPeso.getText().trim());
+				Arista arista = new Arista(v1, v2, peso);
 
-            try {
-            	double peso = Double.parseDouble(txtPeso.getText().trim());
-                Arista arista = new Arista(v1, v2, peso);
+				boolean agregada = grafo.agregarArista(arista);
 
-                boolean agregada = grafo.agregarArista(arista);
+				if (agregada) {
 
-                if (agregada) {
+					dibujarConexion(v1, v2);
+					modeloConexiones.addElement(v1.getNombre() + " - " + v2.getNombre() + " | Peso: " + peso);
+					JOptionPane.showMessageDialog(this, "Conexión agregada correctamente");
 
-                    dibujarConexion(v1, v2);
-                    modeloConexiones.addElement( v1.getNombre() + " - " +  v2.getNombre() + " | Peso: " + peso 	);
-                    JOptionPane.showMessageDialog(this,   "Conexión agregada correctamente");
+					txtPeso.setText("");
 
-                    txtPeso.setText("");
+				} else {
+					JOptionPane.showMessageDialog(this, "Esta conexión ya existe");
+				}
 
-                } else {
-                    JOptionPane.showMessageDialog(this, "Esta conexión ya existe");
-                }
+			} catch (NumberFormatException ex) {
+				JOptionPane.showMessageDialog(null, "El peso debe ser un numero valido ");
+			}
 
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null,"El peso debe ser un numero valido ");
-            }
+		});
+		botonGenerarRegiones.addActionListener(e -> {
 
-        });
-        botonGenerarRegiones.addActionListener(e -> {
+			String entrada = JOptionPane.showInputDialog(this, "¿Cuántas regiones querés generar?");
 
-            String entrada = JOptionPane.showInputDialog(
-                    this, "¿Cuántas regiones querés generar?"
-            );
+			if (entrada == null) {
+				return;
+			}
 
-            if (entrada == null) {
-                return;
-            }
+			try {
+				int k = Integer.parseInt(entrada.trim());
 
-            try {
-                int k = Integer.parseInt(entrada.trim());
+				List<List<Vertice>> regiones = AlgoritmoKruskal.generarRegiones(grafo, k);
+				regionesGuardadas = regiones;
+				colorearRegiones(regiones);
+				actualizarAristasRegiones(regiones);
+				StringBuilder resultado = new StringBuilder();
 
-                List<List<Vertice>> regiones =  TeoremaKruskal.generarRegiones(grafo, k);
-                regionesGuardadas = regiones; /// pasar a tadeob
-                colorearRegiones(regiones);
-                ///pasar atade
-                actualizarAristasRegiones(regiones);
-                ///
-                StringBuilder resultado = new StringBuilder();
+				for (int i = 0; i < regiones.size(); i++) {
 
-                for (int i = 0; i < regiones.size(); i++) {
+					resultado.append("REGIÓN ").append(i + 1).append(":\n");
 
-                    resultado.append("REGIÓN ").append(i + 1)  .append(":\n");
+					for (Vertice v : regiones.get(i)) {
+						resultado.append(" - ").append(v.getNombre()).append("\n");
+					}
 
-                    for (Vertice v : regiones.get(i)) {
-                        resultado.append(" - ").append(v.getNombre()) .append("\n");
-                    }
+					resultado.append("\n");
+				}
 
-                    resultado.append("\n");
-                }
+				JOptionPane.showMessageDialog(this, resultado.toString(), "Regiones generadas",
+						JOptionPane.INFORMATION_MESSAGE);
 
-                JOptionPane.showMessageDialog(this, resultado.toString(), "Regiones generadas",  JOptionPane.INFORMATION_MESSAGE);
+			} catch (NumberFormatException ex) {
+				JOptionPane.showMessageDialog(this, "Ingresá un número entero para k");
 
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Ingresá un número entero para k");
+			} catch (IllegalArgumentException ex) {
+				JOptionPane.showMessageDialog(this, ex.getMessage());
+			}
+		});
 
-            } catch (IllegalArgumentException ex) {
-                JOptionPane.showMessageDialog(this,  ex.getMessage());
-            }
-        });      
-            /////////////////////ultomo
+		botonConsultarRegiones.addActionListener(e -> {
 
-botonConsultarRegiones.addActionListener(e -> {
+			if (regionesGuardadas == null) {
+				JOptionPane.showMessageDialog(this, "Primero debés generar las regiones.");
+				return;
+			}
 
-    if (regionesGuardadas == null) {
-        JOptionPane.showMessageDialog( this, "Primero debés generar las regiones." );
-        return;
-    }
+			StringBuilder resultado = new StringBuilder();
 
-    StringBuilder resultado = new StringBuilder();
+			for (int i = 0; i < regionesGuardadas.size(); i++) {
 
-    for (int i = 0; i < regionesGuardadas.size(); i++) {
+				resultado.append("REGIÓN ").append(i + 1).append(":\n");
 
-        resultado.append("REGIÓN ") .append(i + 1) .append(":\n");
+				for (Vertice v : regionesGuardadas.get(i)) {
+					resultado.append(" - ").append(v.getNombre()).append("\n");
+				}
 
-        for (Vertice v : regionesGuardadas.get(i)) {
-            resultado.append(" - ") .append(v.getNombre()).append("\n");
-        }
+				resultado.append("\n");
+			}
 
-        resultado.append("\n");
-    }
+			JOptionPane.showMessageDialog(this, resultado.toString(), "Consultar Regiones",
+					JOptionPane.INFORMATION_MESSAGE);
+		});
 
-    JOptionPane.showMessageDialog(
-        this, resultado.toString(),"Consultar Regiones", JOptionPane.INFORMATION_MESSAGE );
-});
-           
-        
-    }
-    private void dibujarConexion(Vertice v1, Vertice v2) {
+	}
 
-        Coordinate punto1 = new Coordinate(v1.getX(), v1.getY());
-        Coordinate punto2 = new Coordinate(v2.getX(), v2.getY());
+	private void dibujarConexion(Vertice v1, Vertice v2) {
 
-        MapPolygonImpl linea = new MapPolygonImpl( Arrays.asList(punto1, punto2, punto2));
+		Coordinate punto1 = new Coordinate(v1.getX(), v1.getY());
+		Coordinate punto2 = new Coordinate(v2.getX(), v2.getY());
 
-        mapa.addMapPolygon(linea);
-        mapa.repaint();
-    }
-    private void actualizarAristasRegiones(List<List<Vertice>> regiones) {
-    	mapa.removeAllMapPolygons();
-    	Grafo agm = TeoremaKruskal.calcularAGM(grafo);
-    	for (Arista arista : agm.obtenerTodasAristas()) {
+		MapPolygonImpl linea = new MapPolygonImpl(Arrays.asList(punto1, punto2, punto2));
 
-            Vertice v1 = arista.getVertice1();
-            Vertice v2 = arista.getVertice2();
-            for (List<Vertice> region : regiones) {
+		mapa.addMapPolygon(linea);
+		mapa.repaint();
+	}
 
-                if (region.contains(v1) && region.contains(v2)) {
-                	 dibujarConexion(v1, v2);
-                     break;
-                 }
-             }
-         }
+	private void actualizarAristasRegiones(List<List<Vertice>> regiones) {
+		mapa.removeAllMapPolygons();
+		Grafo agm = AlgoritmoKruskal.calcularAGM(grafo);
+		for (Arista arista : agm.obtenerTodasAristas()) {
 
-         mapa.repaint();
-                }
-    	
-    private void colorearRegiones(List<List<Vertice>> regiones) {
+			Vertice v1 = arista.getVertice1();
+			Vertice v2 = arista.getVertice2();
+			for (List<Vertice> region : regiones) {
 
-        Color[] colores = {
-            Color.RED,
-            Color.BLUE,
-            Color.GREEN,
-            Color.ORANGE,
-            Color.MAGENTA,
-            Color.CYAN
-        };
+				if (region.contains(v1) && region.contains(v2)) {
+					dibujarConexion(v1, v2);
+					break;
+				}
+			}
+		}
 
-        Map<Vertice, Color> colorPorVertice = new HashMap<>();
+		mapa.repaint();
+	}
 
-        for (int i = 0; i < regiones.size(); i++) {
-            Color color = colores[i % colores.length];
+	private void colorearRegiones(List<List<Vertice>> regiones) {
 
-            for (Vertice vertice : regiones.get(i)) {
-                colorPorVertice.put(vertice, color);
-            }
-        }
+		Color[] colores = { Color.RED, Color.BLUE, Color.GREEN, Color.ORANGE, Color.MAGENTA, Color.CYAN };
 
-        mapa.removeAllMapMarkers();
+		Map<Vertice, Color> colorPorVertice = new HashMap<>();
 
-        for (Vertice vertice : grafo.obtenerVertices()) {
-            MapMarkerDot marcador = new MapMarkerDot(
-                    vertice.getNombre(),
-                    new Coordinate(vertice.getX(), vertice.getY())
-            );
+		for (int i = 0; i < regiones.size(); i++) {
+			Color color = colores[i % colores.length];
 
-            marcador.setBackColor(colorPorVertice.get(vertice));
-            mapa.addMapMarker(marcador);
-        }
+			for (Vertice vertice : regiones.get(i)) {
+				colorPorVertice.put(vertice, color);
+			}
+		}
 
-        mapa.repaint();
-    }
+		mapa.removeAllMapMarkers();
+
+		for (Vertice vertice : grafo.obtenerVertices()) {
+			MapMarkerDot marcador = new MapMarkerDot(vertice.getNombre(),
+					new Coordinate(vertice.getX(), vertice.getY()));
+
+			marcador.setBackColor(colorPorVertice.get(vertice));
+			mapa.addMapMarker(marcador);
+		}
+
+		mapa.repaint();
+	}
 }

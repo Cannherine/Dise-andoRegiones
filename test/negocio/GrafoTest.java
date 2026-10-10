@@ -73,8 +73,6 @@ class GrafoTest {
 
         assertTrue(grafo.agregarArista(ab));
 
-        // A-B y B-A representan la misma conexión,
-        // aunque se intente ingresar otro peso.
         assertFalse(grafo.agregarArista(ba));
     }
 
@@ -121,7 +119,7 @@ class GrafoTest {
 
     @Test
     void obtenerAristasDeVerticeInexistenteDevuelveNull() {
-        assertNull(grafo.obtenerAristas(a));
+    	assertThrows(IllegalArgumentException.class, () -> grafo.obtenerAristas(a));
     }
 
     @Test
