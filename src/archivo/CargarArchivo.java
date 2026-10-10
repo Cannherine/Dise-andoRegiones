@@ -13,7 +13,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 public class CargarArchivo {
-	 public static Grafo cargarDesdeArchivoCSV(File archivo)
+
+
+	 public static Grafo cargarDesdeArchivo(File archivo)
+
 	            throws IOException {
 
 	        if (archivo == null || !archivo.isFile()) {
@@ -105,3 +108,4 @@ public class CargarArchivo {
 	        return grafo;
 	    }
 }
+
