@@ -15,6 +15,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 
@@ -453,7 +454,15 @@ public class VentanaPrincipal extends JFrame {
 		});
 
 		botonCargarArchivo.addActionListener(e -> {
-			File archivo = new File("VerticesYAristasDeArgentina.txt");
+			JFileChooser selector = new JFileChooser(new File(System.getProperty("user.dir")));
+		    selector.setDialogTitle("Seleccionar archivo del grafo");
+		    selector.setFileFilter(new FileNameExtensionFilter("Archivos de texto (*.txt)", "txt"));
+
+		    if (selector.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
+		        return;
+		    }
+
+		    File archivo = selector.getSelectedFile();
 
 			try {
 				grafo = CargarArchivo.cargarDesdeArchivo(archivo);
@@ -492,7 +501,7 @@ public class VentanaPrincipal extends JFrame {
 
 					dibujarConexion(v1, v2);
 				}
-
+				mapa.setDisplayToFitMapMarkers();
 				mapa.repaint();
 
 				JOptionPane.showMessageDialog(this, "Archivo cargado correctamente.", "Carga exitosa",
