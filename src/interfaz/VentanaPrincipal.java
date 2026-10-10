@@ -3,6 +3,7 @@ package interfaz;
 import java.awt.BorderLayout;
 
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
@@ -11,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -18,6 +20,7 @@ import org.openstreetmap.gui.jmapviewer.JMapViewer;
 
 import javax.swing.JOptionPane;
 import javax.swing.JList;
+import javax.swing.AbstractButton;
 import javax.swing.DefaultListModel;
 import negocio.Grafo;
 import negocio.Vertice;
@@ -27,12 +30,17 @@ import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 
+import archivo.CargarArchivo;
 import negocio.Arista;
 import java.util.List;
-import negocio.AlgoritmoKruskal;
+import negocio.TeoremaKruskal;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.JFileChooser;
+import java.io.IOException;
+import java.io.File;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -102,14 +110,18 @@ public class VentanaPrincipal extends JFrame {
 		setLocationRelativeTo(null);
 
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(232, 241, 250)); // color
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(10, 10));
+		//// color
 
 		JPanel panelTitulo = new JPanel();
+		panelTitulo.setBackground(new Color(25, 54, 91));
 		contentPane.add(panelTitulo, BorderLayout.NORTH);
-
 		JLabel lblTitulo = new JLabel("DISEÑANDO REGIONES");
+		lblTitulo.setForeground(Color.WHITE);
+		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
 		panelTitulo.add(lblTitulo);
 
 		JPanel panelCentral = new JPanel();
@@ -120,7 +132,9 @@ public class VentanaPrincipal extends JFrame {
 		panelCentral.add(panelCarga);
 		panelCarga.setLayout(new BorderLayout(10, 10));
 
-		JLabel lblCarga = new JLabel("CARGA DEL GRAFO");
+		JLabel lblCarga = new JLabel("CARGA DEL GRAFO");// letra
+		lblCarga.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		lblCarga.setForeground(new Color(25, 54, 91));
 		panelCarga.add(lblCarga, BorderLayout.NORTH);
 
 		JPanel panelContenido = new JPanel();
@@ -153,7 +167,6 @@ public class VentanaPrincipal extends JFrame {
 
 		JButton botonAgregarCiudades = new JButton("Agregar " + singular);
 		panelCiudad.add(botonAgregarCiudades);
-		///////////////////////////////// cuadro vertical
 		JPanel panelLista = new JPanel();
 		panelContenido.add(panelLista, BorderLayout.CENTER);
 		panelLista.setLayout(new GridLayout(1, 2, 10, 5));
@@ -161,39 +174,44 @@ public class VentanaPrincipal extends JFrame {
 		JPanel panelProvincias = new JPanel(new BorderLayout(5, 5));
 
 		JLabel lblLista = new JLabel(plural + " " + terminacion);
+		lblLista.setFont(new Font("Segoe UI", Font.BOLD, 13));
+		lblLista.setForeground(new Color(25, 54, 91));
 		panelProvincias.add(lblLista, BorderLayout.NORTH);
 
 		modeloCiudades = new DefaultListModel<>();
 		listaCiudades = new JList<>(modeloCiudades);
+		listaCiudades.setBackground(new Color(225, 237, 250));
+		listaCiudades.setForeground(new Color(30, 58, 95));
+		listaCiudades.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 
 		JScrollPane scrollCiudades = new JScrollPane(listaCiudades);
 		panelProvincias.add(scrollCiudades, BorderLayout.CENTER);
 
 		panelLista.add(panelProvincias);
-		//// agregre esto para las listas
 
 		JPanel panelConexionesLista = new JPanel();
 		panelConexionesLista.setLayout(new BorderLayout(5, 5));
 
 		JLabel lblConexiones = new JLabel("CONEXIONES Y PESOS");
+		lblConexiones.setFont(new Font("Segoe UI", Font.BOLD, 13));
+		lblConexiones.setForeground(new Color(25, 54, 91));
 		panelConexionesLista.add(lblConexiones, BorderLayout.NORTH);
 
 		modeloConexiones = new DefaultListModel<>();
 
 		JList<String> listaConexiones = new JList<>(modeloConexiones);
+		listaConexiones.setBackground(new Color(225, 237, 250));
+		listaConexiones.setForeground(new Color(30, 58, 95));
+		listaConexiones.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 
 		JScrollPane scrollConexiones = new JScrollPane(listaConexiones);
 		panelConexionesLista.add(scrollConexiones, BorderLayout.CENTER);
 
-		// panelConexionesLista.setPreferredSize(
-		// new java.awt.Dimension(0, 115)
-		// );
 		panelLista.add(panelConexionesLista);
-		panelLista.add(panelConexionesLista, BorderLayout.SOUTH);
 
 		JPanel panelConexion = new JPanel();
 		panelContenido.add(panelConexion, BorderLayout.SOUTH);
-		panelConexion.setLayout(new GridLayout(6, 2, 10, 5));
+		panelConexion.setLayout(new GridLayout(7, 2, 10, 5));
 		JLabel lblCiudad1 = new JLabel(singular + " 1:");
 		panelConexion.add(lblCiudad1);
 
@@ -219,10 +237,28 @@ public class VentanaPrincipal extends JFrame {
 		JButton botonGenerarRegiones = new JButton("Generar Regiones");
 		panelConexion.add(new JLabel(""));
 		panelConexion.add(botonGenerarRegiones);
-		//// para el born de la lista regiones
 		JButton botonConsultarRegiones = new JButton("Consultar Regiones");
 		panelConexion.add(new JLabel(""));
 		panelConexion.add(botonConsultarRegiones);
+		JButton botonCargarArchivo = new JButton("Cargar archivo");
+		panelConexion.add(new JLabel(""));
+		panelConexion.add(botonCargarArchivo);
+
+		botonAgregarCiudades.setBackground(new Color(37, 99, 235));
+		botonAgregarCiudades.setForeground(Color.WHITE);
+		botonAgregarCiudades.setFont(new Font("Segoe UI", Font.BOLD, 13));
+
+		botonAgregarConexion.setBackground(new Color(37, 99, 235));
+		botonAgregarConexion.setForeground(Color.WHITE);
+		botonAgregarConexion.setFont(new Font("Segoe UI", Font.BOLD, 13));
+
+		botonGenerarRegiones.setBackground(new Color(22, 163, 74));
+		botonGenerarRegiones.setForeground(Color.WHITE);
+		botonGenerarRegiones.setFont(new Font("Segoe UI", Font.BOLD, 13));
+
+		botonConsultarRegiones.setBackground(new Color(71, 85, 105));
+		botonConsultarRegiones.setForeground(Color.WHITE);
+		botonConsultarRegiones.setFont(new Font("Segoe UI", Font.BOLD, 13));
 
 		JPanel panelResultados = new JPanel();
 		panelCentral.add(panelResultados);
@@ -232,7 +268,25 @@ public class VentanaPrincipal extends JFrame {
 		mapa.setDisplayPosition(new Coordinate(latitud, longitud), 6);
 
 		JLabel lblResultados = new JLabel("MAPA");
+		lblResultados.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		lblResultados.setForeground(new Color(25, 54, 91));
 		panelResultados.add(lblResultados, BorderLayout.NORTH);
+
+		Color fondo = new Color(232, 241, 250);
+
+		contentPane.setBackground(fondo);
+		panelCentral.setBackground(fondo);
+		panelCarga.setBackground(fondo);
+		panelContenido.setBackground(fondo);
+
+		panelCiudad.setBackground(fondo);
+		panelConexion.setBackground(fondo);
+
+		panelLista.setBackground(fondo);
+		panelProvincias.setBackground(fondo);
+		panelConexionesLista.setBackground(fondo);
+
+		panelResultados.setBackground(fondo);
 
 		botonAgregarCiudades.addActionListener(e -> {
 
@@ -260,7 +314,7 @@ public class VentanaPrincipal extends JFrame {
 					mapa.addMapMarker(marcador);
 					mapa.setDisplayPosition(new Coordinate(x, y), 6);
 
-					JOptionPane.showMessageDialog(this, singular + " agregado correctamente");
+					Mensajes.exito(this, singular + " agregado correctamente");
 					txtNombre.setText("");
 					txtX.setText("");
 					txtY.setText("");
@@ -269,9 +323,10 @@ public class VentanaPrincipal extends JFrame {
 				}
 
 			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(this, "Las coordenadas deben ser números decimales");
+				Mensajes.error(this, "Las coordenadas deben ser números decimales");
 			}
 		});
+
 		botonAgregarConexion.addActionListener(e -> {
 
 			Vertice v1 = (Vertice) comboCiudad1.getSelectedItem();
@@ -321,10 +376,12 @@ public class VentanaPrincipal extends JFrame {
 			try {
 				int k = Integer.parseInt(entrada.trim());
 
-				List<List<Vertice>> regiones = AlgoritmoKruskal.generarRegiones(grafo, k);
-				regionesGuardadas = regiones;
+				List<List<Vertice>> regiones = TeoremaKruskal.generarRegiones(grafo, k);
+				regionesGuardadas = regiones; 
 				colorearRegiones(regiones);
+
 				actualizarAristasRegiones(regiones);
+
 				StringBuilder resultado = new StringBuilder();
 
 				for (int i = 0; i < regiones.size(); i++) {
@@ -338,7 +395,18 @@ public class VentanaPrincipal extends JFrame {
 					resultado.append("\n");
 				}
 
-				JOptionPane.showMessageDialog(this, resultado.toString(), "Regiones generadas",
+
+				JTextArea areaResultado = new JTextArea(resultado.toString());
+
+				areaResultado.setEditable(false);
+				areaResultado.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+				areaResultado.setBackground(new Color(232, 241, 250));
+
+				JScrollPane scrollResultado = new JScrollPane(areaResultado);
+
+				scrollResultado.setPreferredSize(new java.awt.Dimension(400, 350));
+
+				JOptionPane.showMessageDialog(this, scrollResultado, "Regiones generadas",
 						JOptionPane.INFORMATION_MESSAGE);
 
 			} catch (NumberFormatException ex) {
@@ -369,8 +437,71 @@ public class VentanaPrincipal extends JFrame {
 				resultado.append("\n");
 			}
 
-			JOptionPane.showMessageDialog(this, resultado.toString(), "Consultar Regiones",
-					JOptionPane.INFORMATION_MESSAGE);
+			JTextArea areaConsulta = new JTextArea(resultado.toString());
+
+			areaConsulta.setEditable(false);
+			areaConsulta.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+			areaConsulta.setBackground(new Color(232, 241, 250));
+			areaConsulta.setCaretPosition(0);
+
+			JScrollPane scrollConsulta = new JScrollPane(areaConsulta);
+
+			scrollConsulta.setPreferredSize(new java.awt.Dimension(400, 350));
+
+			JOptionPane.showMessageDialog(this, scrollConsulta, "Consultar Regiones", JOptionPane.INFORMATION_MESSAGE);
+
+		});
+
+		botonCargarArchivo.addActionListener(e -> {
+			File archivo = new File("VerticesYAristasDeArgentina.txt");
+
+			try {
+				grafo = CargarArchivo.cargarDesdeArchivo(archivo);
+
+				modeloCiudades.clear();
+				modeloConexiones.clear();
+
+				comboCiudad1.removeAllItems();
+				comboCiudad2.removeAllItems();
+
+				mapa.removeAllMapMarkers();
+				mapa.removeAllMapPolygons();
+
+				regionesGuardadas = null;
+
+				for (Vertice vertice : grafo.obtenerVertices()) {
+
+					modeloCiudades.addElement(vertice.getNombre());
+
+					comboCiudad1.addItem(vertice);
+					comboCiudad2.addItem(vertice);
+
+					MapMarkerDot marcador = new MapMarkerDot(vertice.getNombre(),
+							new Coordinate(vertice.getX(), vertice.getY()));
+
+					mapa.addMapMarker(marcador);
+				}
+
+				for (Arista arista : grafo.obtenerTodasAristas()) {
+
+					Vertice v1 = arista.getVertice1();
+					Vertice v2 = arista.getVertice2();
+
+					modeloConexiones
+					.addElement(v1.getNombre() + " - " + v2.getNombre() + " | Peso: " + arista.getPeso());
+
+					dibujarConexion(v1, v2);
+				}
+
+				mapa.repaint();
+
+				JOptionPane.showMessageDialog(this, "Archivo cargado correctamente.", "Carga exitosa",
+						JOptionPane.INFORMATION_MESSAGE);
+
+			} catch (IOException ex) {
+				JOptionPane.showMessageDialog(this, "Error al cargar el archivo:\n" + ex.getMessage(), "Error",
+						JOptionPane.ERROR_MESSAGE);
+			}
 		});
 
 	}
@@ -388,7 +519,7 @@ public class VentanaPrincipal extends JFrame {
 
 	private void actualizarAristasRegiones(List<List<Vertice>> regiones) {
 		mapa.removeAllMapPolygons();
-		Grafo agm = AlgoritmoKruskal.calcularAGM(grafo);
+		Grafo agm = TeoremaKruskal.calcularAGM(grafo);
 		for (Arista arista : agm.obtenerTodasAristas()) {
 
 			Vertice v1 = arista.getVertice1();
@@ -407,12 +538,13 @@ public class VentanaPrincipal extends JFrame {
 
 	private void colorearRegiones(List<List<Vertice>> regiones) {
 
-		Color[] colores = { Color.RED, Color.BLUE, Color.GREEN, Color.ORANGE, Color.MAGENTA, Color.CYAN };
 
 		Map<Vertice, Color> colorPorVertice = new HashMap<>();
+		int cantidadRegiones = regiones.size();
 
-		for (int i = 0; i < regiones.size(); i++) {
-			Color color = colores[i % colores.length];
+		for (int i = 0; i < cantidadRegiones; i++) {
+
+			Color color = Color.getHSBColor((float) i / cantidadRegiones, 0.8f, 0.9f);
 
 			for (Vertice vertice : regiones.get(i)) {
 				colorPorVertice.put(vertice, color);

@@ -50,14 +50,17 @@ public class Grafo {
 		for (List<Arista> lista : adyacencias.values()) {
 			for (Arista arista : lista) {
 				if (!todasAristas.contains(arista)) {
+
 					todasAristas.add(arista);
 				}
 			}
 		}
 		return todasAristas;
+
 	}
 
 	public List<Vertice> obtenerVertices() {
 		return new ArrayList<>(adyacencias.keySet());
 	}
+
 }

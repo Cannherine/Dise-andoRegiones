@@ -1,0 +1,67 @@
+VERTICE,Buenos Aires,-37.150000,-60.000000
+VERTICE,Catamarca,-27.200000,-67.000000
+VERTICE,Chaco,-26.300000,-60.500000
+VERTICE,Chubut,-44.016667,-67.858333
+VERTICE,Córdoba,-31.416668,-64.183334
+VERTICE,Corrientes,-28.800000,-57.800000
+VERTICE,Entre Ríos,-32.050000,-59.300000
+VERTICE,Formosa,-24.890000,-59.920000
+VERTICE,Jujuy,-23.300000,-65.500000
+VERTICE,La Pampa,-37.250000,-65.500000
+VERTICE,La Rioja,-29.500000,-67.000000
+VERTICE,Mendoza,-34.500000,-68.500000
+VERTICE,Misiones,-26.900000,-54.400000
+VERTICE,Neuquén,-38.500000,-70.000000
+VERTICE,Río Negro,-40.481197,-67.614591
+VERTICE,Salta,-24.890000,-64.480000
+VERTICE,San Juan,-30.900000,-69.300000
+VERTICE,San Luis,-33.700000,-66.000000
+VERTICE,Santa Cruz,-48.500000,-70.000000
+VERTICE,Santa Fe,-30.700000,-60.900000
+VERTICE,Santiago del Estero,-27.800470,-64.262850
+VERTICE,Tierra del Fuego,-54.407106,-67.897489
+VERTICE,Tucumán,-26.900000,-65.300000
+ARISTA,Buenos Aires,La Pampa,14
+ARISTA,Buenos Aires,Córdoba,12.5
+ARISTA,Buenos Aires,Santa Fe,16.8
+ARISTA,Buenos Aires,Entre Ríos,5
+ARISTA,Buenos Aires,Río Negro,7
+ARISTA,Catamarca,Salta,8
+ARISTA,Catamarca,Tucumán,6.7
+ARISTA,Catamarca,Santiago del Estero,1.2
+ARISTA,Catamarca,La Rioja,1.7
+ARISTA,Catamarca,Córdoba,4.9
+ARISTA,Chaco,Formosa,2.5
+ARISTA,Chaco,Salta,3.3
+ARISTA,Chaco,Santiago del Estero,13
+ARISTA,Chaco,Santa Fe,5.3
+ARISTA,Chaco,Corrientes,6.2
+ARISTA,Chubut,Río Negro,2
+ARISTA,Chubut,Santa Cruz,1
+ARISTA,Córdoba,Santa Fe,8.5
+ARISTA,Córdoba,Santiago del Estero,2.4
+ARISTA,Córdoba,La Rioja,4.1
+ARISTA,Córdoba,San Luis,5.9
+ARISTA,Corrientes,Misiones,3.8
+ARISTA,Corrientes,Entre Ríos,2
+ARISTA,Corrientes,Santa Fe,2.5
+ARISTA,Entre Ríos,Santa Fe,10
+ARISTA,Formosa,Salta,11.4
+ARISTA,Jujuy,Salta,10.5
+ARISTA,La Pampa,Mendoza,7.2
+ARISTA,La Pampa,San Luis,4.6
+ARISTA,La Pampa,Córdoba,3.5
+ARISTA,La Pampa,Río Negro,1.8
+ARISTA,La Rioja,San Juan,1.7
+ARISTA,La Rioja,San Luis,12
+ARISTA,Mendoza,San Juan,0
+ARISTA,Mendoza,San Luis,6.3
+ARISTA,Mendoza,Neuquén,0.5
+ARISTA,Neuquén,Río Negro,6.8
+ARISTA,Neuquén,La Pampa,1.6
+ARISTA,Salta,Tucumán,5
+ARISTA,Salta,Santiago del Estero,9.4
+ARISTA,San Juan,San Luis,6.7
+ARISTA,Santa Fe,Santiago del Estero,2
+ARISTA,Santiago del Estero,Tucumán,4.3
+ARISTA,Tierra del Fuego,Santa Cruz,3.7
