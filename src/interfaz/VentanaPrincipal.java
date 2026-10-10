@@ -3,6 +3,7 @@ package interfaz;
 import java.awt.BorderLayout;
 
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
@@ -11,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -33,6 +35,9 @@ import negocio.TeoremaKruskal;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.JFileChooser;
+import java.io.IOException;
 
 public class VentanaPrincipal extends JFrame {
 
@@ -110,15 +115,20 @@ public class VentanaPrincipal extends JFrame {
         setLocationRelativeTo(null);
 
         contentPane = new JPanel();
+        contentPane.setBackground(new Color(232, 241, 250)); // color 
         contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
         setContentPane(contentPane);
         contentPane.setLayout(new BorderLayout(10, 10));
+//// color
 
-        JPanel panelTitulo = new JPanel();
-        contentPane.add(panelTitulo, BorderLayout.NORTH);
+JPanel panelTitulo = new JPanel();
+panelTitulo.setBackground(new Color(25, 54, 91));
+contentPane.add(panelTitulo, BorderLayout.NORTH);
+JLabel lblTitulo = new JLabel("DISEÑANDO REGIONES");
+lblTitulo.setForeground(Color.WHITE);
+lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
+panelTitulo.add(lblTitulo);
 
-        JLabel lblTitulo = new JLabel("DISEÑANDO REGIONES");
-        panelTitulo.add(lblTitulo);
 
         JPanel panelCentral = new JPanel();
         contentPane.add(panelCentral, BorderLayout.CENTER);
@@ -128,7 +138,9 @@ public class VentanaPrincipal extends JFrame {
         panelCentral.add(panelCarga);
         panelCarga.setLayout(new BorderLayout(10, 10));
 
-        JLabel lblCarga = new JLabel("CARGA DEL GRAFO");
+        JLabel lblCarga = new JLabel("CARGA DEL GRAFO");// letra
+        lblCarga.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lblCarga.setForeground(new Color(25, 54, 91));
         panelCarga.add(lblCarga, BorderLayout.NORTH);
 
         JPanel panelContenido = new JPanel();
@@ -168,11 +180,18 @@ public class VentanaPrincipal extends JFrame {
         
         JPanel panelProvincias = new JPanel(new BorderLayout(5, 5));
 
-        JLabel lblLista = new JLabel(plural + " " + terminacion);
+        JLabel lblLista = new JLabel(plural + " " + terminacion); // letra
+        lblLista.setFont(new Font("Segoe UI", Font.BOLD, 13));
+        lblLista.setForeground(new Color(25, 54, 91));
         panelProvincias.add(lblLista, BorderLayout.NORTH);
 
         modeloCiudades = new DefaultListModel<>();
         listaCiudades = new JList<>(modeloCiudades);
+        // color 
+        listaCiudades.setBackground(new Color(225, 237, 250));
+        //listaCiudades.setBackground(new Color(245, 248, 252));
+        listaCiudades.setForeground(new Color(30, 58, 95));
+        listaCiudades.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 
         JScrollPane scrollCiudades = new JScrollPane(listaCiudades);
         panelProvincias.add(scrollCiudades, BorderLayout.CENTER);
@@ -183,12 +202,18 @@ public class VentanaPrincipal extends JFrame {
 JPanel panelConexionesLista = new JPanel();
 panelConexionesLista.setLayout(new BorderLayout(5, 5));
 
-JLabel lblConexiones = new JLabel("CONEXIONES Y PESOS");
+JLabel lblConexiones = new JLabel("CONEXIONES Y PESOS");//lettra
+lblConexiones.setFont(new Font("Segoe UI", Font.BOLD, 13));
+lblConexiones.setForeground(new Color(25, 54, 91));
 panelConexionesLista.add(lblConexiones, BorderLayout.NORTH);
 
 modeloConexiones = new DefaultListModel<>();
 
 JList<String> listaConexiones = new JList<>(modeloConexiones);
+// color 
+listaConexiones.setBackground(new Color(225, 237, 250));
+listaConexiones.setForeground(new Color(30, 58, 95));
+listaConexiones.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 
 JScrollPane scrollConexiones = new JScrollPane(listaConexiones);
 panelConexionesLista.add(scrollConexiones, BorderLayout.CENTER);
@@ -197,7 +222,7 @@ panelConexionesLista.add(scrollConexiones, BorderLayout.CENTER);
 //    new java.awt.Dimension(0, 115)
 //);
 panelLista.add(panelConexionesLista);
-panelLista.add(panelConexionesLista, BorderLayout.SOUTH);
+//panelLista.add(panelConexionesLista, BorderLayout.SOUTH);
 
 
         JPanel panelConexion = new JPanel();
@@ -232,7 +257,26 @@ panelLista.add(panelConexionesLista, BorderLayout.SOUTH);
         JButton botonConsultarRegiones = new JButton("Consultar Regiones");
         panelConexion.add(new JLabel(""));
         panelConexion.add(botonConsultarRegiones);
-        
+        // color
+
+
+
+botonAgregarCiudades.setBackground(new Color(37, 99, 235));
+botonAgregarCiudades.setForeground(Color.WHITE);
+botonAgregarCiudades.setFont(new Font("Segoe UI", Font.BOLD, 13));
+
+botonAgregarConexion.setBackground(new Color(37, 99, 235));
+botonAgregarConexion.setForeground(Color.WHITE);
+botonAgregarConexion.setFont(new Font("Segoe UI", Font.BOLD, 13));
+
+botonGenerarRegiones.setBackground(new Color(22, 163, 74));
+botonGenerarRegiones.setForeground(Color.WHITE);
+botonGenerarRegiones.setFont(new Font("Segoe UI", Font.BOLD, 13));
+
+botonConsultarRegiones.setBackground(new Color(71, 85, 105));
+botonConsultarRegiones.setForeground(Color.WHITE);
+botonConsultarRegiones.setFont(new Font("Segoe UI", Font.BOLD, 13));
+
         JPanel panelResultados = new JPanel();
         panelCentral.add(panelResultados);
         panelResultados.setLayout(new BorderLayout());
@@ -242,8 +286,30 @@ panelLista.add(panelConexionesLista, BorderLayout.SOUTH);
         
       
 
-        JLabel lblResultados = new JLabel("MAPA");
+        JLabel lblResultados = new JLabel("MAPA");//letra
+        lblResultados.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        lblResultados.setForeground(new Color(25, 54, 91));
         panelResultados.add(lblResultados, BorderLayout.NORTH);
+// fondo
+Color fondo = new Color(232, 241, 250);
+
+contentPane.setBackground(fondo);
+panelCentral.setBackground(fondo);
+panelCarga.setBackground(fondo);
+panelContenido.setBackground(fondo);
+
+
+panelCiudad.setBackground(fondo);
+panelConexion.setBackground(fondo);
+
+
+panelLista.setBackground(fondo);
+panelProvincias.setBackground(fondo);
+panelConexionesLista.setBackground(fondo);
+
+
+panelResultados.setBackground(fondo);
+
 
         botonAgregarCiudades.addActionListener(e -> {
 
@@ -272,7 +338,9 @@ panelLista.add(panelConexionesLista, BorderLayout.SOUTH);
                    mapa.setDisplayPosition(new Coordinate(x, y), 6);
                     ///
 
-                    JOptionPane.showMessageDialog(this, singular + " agregado correctamente");
+                    JOptionPane.showMessageDialog(this, singular + " agregado correctamente",    "Operación exitosa",
+    JOptionPane.INFORMATION_MESSAGE
+);
                     txtNombre.setText("");
                     txtX.setText("");
                     txtY.setText("");
@@ -280,7 +348,8 @@ panelLista.add(panelConexionesLista, BorderLayout.SOUTH);
                 	JOptionPane.showMessageDialog(this, singular + " ya existe");                }
 
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this,"Las coordenadas deben ser números decimales");
+                JOptionPane.showMessageDialog(this,"Las coordenadas deben ser números decimales","Error al ingresar datos",
+                	    JOptionPane.ERROR_MESSAGE);
             }
         });
         botonAgregarConexion.addActionListener(e -> {
@@ -353,8 +422,25 @@ panelLista.add(panelConexionesLista, BorderLayout.SOUTH);
                     resultado.append("\n");
                 }
 
-                JOptionPane.showMessageDialog(this, resultado.toString(), "Regiones generadas",  JOptionPane.INFORMATION_MESSAGE);
+              //  JOptionPane.showMessageDialog(this, resultado.toString(), "Regiones generadas",  JOptionPane.INFORMATION_MESSAGE);
 
+
+JTextArea areaResultado = new JTextArea(resultado.toString());
+
+areaResultado.setEditable(false);
+areaResultado.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+areaResultado.setBackground(new Color(232, 241, 250));
+
+JScrollPane scrollResultado = new JScrollPane(areaResultado);
+
+scrollResultado.setPreferredSize(
+    new java.awt.Dimension(400, 350)
+);
+
+JOptionPane.showMessageDialog( this, scrollResultado,"Regiones generadas",  JOptionPane.INFORMATION_MESSAGE
+);
+
+                
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this, "Ingresá un número entero para k");
 
@@ -384,8 +470,23 @@ botonConsultarRegiones.addActionListener(e -> {
         resultado.append("\n");
     }
 
-    JOptionPane.showMessageDialog(
-        this, resultado.toString(),"Consultar Regiones", JOptionPane.INFORMATION_MESSAGE );
+    //JOptionPane.showMessageDialog(  this, resultado.toString(),"Consultar Regiones", JOptionPane.INFORMATION_MESSAGE );
+
+JTextArea areaConsulta = new JTextArea(resultado.toString());
+
+areaConsulta.setEditable(false);
+areaConsulta.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+areaConsulta.setBackground(new Color(232, 241, 250));
+areaConsulta.setCaretPosition(0);
+
+JScrollPane scrollConsulta = new JScrollPane(areaConsulta);
+
+scrollConsulta.setPreferredSize(
+    new java.awt.Dimension(400, 350)
+);
+
+JOptionPane.showMessageDialog( this, scrollConsulta, "Consultar Regiones",  JOptionPane.INFORMATION_MESSAGE);
+
 });
            
         
@@ -421,19 +522,22 @@ botonConsultarRegiones.addActionListener(e -> {
     	
     private void colorearRegiones(List<List<Vertice>> regiones) {
 
-        Color[] colores = {
+      /*  Color[] colores = {
             Color.RED,
             Color.BLUE,
             Color.GREEN,
             Color.ORANGE,
             Color.MAGENTA,
             Color.CYAN
-        };
+        };*/
 
         Map<Vertice, Color> colorPorVertice = new HashMap<>();
+        //colores ilimitados
+        int cantidadRegiones = regiones.size();
 
-        for (int i = 0; i < regiones.size(); i++) {
-            Color color = colores[i % colores.length];
+        for (int i = 0; i < cantidadRegiones; i++) {
+/// esto ver
+            Color color = Color.getHSBColor( (float) i / cantidadRegiones, 0.8f,0.9f );
 
             for (Vertice vertice : regiones.get(i)) {
                 colorPorVertice.put(vertice, color);

@@ -35,11 +35,11 @@ public class Vertice { // provincias
 					 return false; 
 				 }
 				 Vertice otra= (Vertice) obj;
-				 return nombre.equals(otra.nombre);
+				 return nombre.equalsIgnoreCase(otra.nombre);
 			 }
 			 @Override
 			 public int hashCode() { //para comparar vertices, ayuda al hashmap; le asigna valor
-				 return nombre.hashCode();
+				    return nombre.toLowerCase(java.util.Locale.ROOT).hashCode();
 			 }
 
 			 @Override
