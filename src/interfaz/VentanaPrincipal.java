@@ -33,7 +33,7 @@ import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
 import archivo.CargarArchivo;
 import negocio.Arista;
 import java.util.List;
-import negocio.TeoremaKruskal;
+import negocio.AlgoritmoKruskal;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
@@ -314,7 +314,7 @@ public class VentanaPrincipal extends JFrame {
 					mapa.addMapMarker(marcador);
 					mapa.setDisplayPosition(new Coordinate(x, y), 6);
 
-					Mensajes.exito(this, singular + " agregado correctamente");
+					Mensaje.exito(this, singular + " agregado correctamente");
 					txtNombre.setText("");
 					txtX.setText("");
 					txtY.setText("");
@@ -323,7 +323,7 @@ public class VentanaPrincipal extends JFrame {
 				}
 
 			} catch (NumberFormatException ex) {
-				Mensajes.error(this, "Las coordenadas deben ser números decimales");
+				Mensaje.error(this, "Las coordenadas deben ser números decimales");
 			}
 		});
 
@@ -376,7 +376,7 @@ public class VentanaPrincipal extends JFrame {
 			try {
 				int k = Integer.parseInt(entrada.trim());
 
-				List<List<Vertice>> regiones = TeoremaKruskal.generarRegiones(grafo, k);
+				List<List<Vertice>> regiones = AlgoritmoKruskal.generarRegiones(grafo, k);
 				regionesGuardadas = regiones; 
 				colorearRegiones(regiones);
 
@@ -519,7 +519,7 @@ public class VentanaPrincipal extends JFrame {
 
 	private void actualizarAristasRegiones(List<List<Vertice>> regiones) {
 		mapa.removeAllMapPolygons();
-		Grafo agm = TeoremaKruskal.calcularAGM(grafo);
+		Grafo agm = AlgoritmoKruskal.calcularAGM(grafo);
 		for (Arista arista : agm.obtenerTodasAristas()) {
 
 			Vertice v1 = arista.getVertice1();

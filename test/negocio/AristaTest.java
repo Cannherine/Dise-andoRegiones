@@ -2,13 +2,21 @@ package negocio;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class AristasTest {
+class AristaTest {
+	private Vertice a, b, c;
+
+	@BeforeEach
+	void setUp() {
+		a = new Vertice("A", 0, 0);
+		b = new Vertice("B", 0, 0);
+		c = new Vertice("C", 0, 0);
+	}
+
 	@Test
 	void aristasInvertidasSonIguales() {
-		Vertice a = new Vertice("A");
-		Vertice b = new Vertice("B");
 		Arista arista1 = new Arista(a, b, 5);
 		Arista arista2 = new Arista(b, a, 5);
 
@@ -17,9 +25,6 @@ class AristasTest {
 
 	@Test
 	void aristasConVerticesDiferentesSonDiferentes() {
-		Vertice a = new Vertice("A");
-		Vertice b = new Vertice("B");
-		Vertice c = new Vertice("C");
 		Arista arista1 = new Arista(a, b, 5);
 		Arista arista2 = new Arista(a, c, 5);
 
@@ -28,8 +33,6 @@ class AristasTest {
 
 	@Test
 	void aristasConMismosVerticesYDistintoPesoSonIguales() {
-		Vertice a = new Vertice("A");
-		Vertice b = new Vertice("B");
 		Arista arista1 = new Arista(a, b, 5);
 		Arista arista2 = new Arista(b, a, 20);
 
@@ -38,8 +41,6 @@ class AristasTest {
 
 	@Test
 	void aristasInvertidasTienenMismoHashCode() {
-		Vertice a = new Vertice("A");
-		Vertice b = new Vertice("B");
 		Arista arista1 = new Arista(a, b, 5);
 		Arista arista2 = new Arista(b, a, 5);
 
@@ -48,8 +49,6 @@ class AristasTest {
 
 	@Test
 	void aristaConMenorPesoEsMenorQueOtraConMayorPeso() {
-		Vertice a = new Vertice("A");
-		Vertice b = new Vertice("B");
 		Arista aristaMenor = new Arista(a, b, 5);
 		Arista aristaMayor = new Arista(a, b, 10);
 
@@ -58,8 +57,6 @@ class AristasTest {
 
 	@Test
 	void aristaConMayorPesoEsMayorQueOtraConMenorPeso() {
-		Vertice a = new Vertice("A");
-		Vertice b = new Vertice("B");
 		Arista aristaMayor = new Arista(a, b, 20);
 		Arista aristaMenor = new Arista(a, b, 5);
 
@@ -68,9 +65,6 @@ class AristasTest {
 
 	@Test
 	void aristasConElMismoPesoDevuelvenCeroAlCompararse() {
-		Vertice a = new Vertice("A");
-		Vertice b = new Vertice("B");
-		Vertice c = new Vertice("C");
 
 		Arista arista1 = new Arista(a, b, 15);
 		Arista arista2 = new Arista(b, c, 15);
@@ -80,8 +74,7 @@ class AristasTest {
 
 	@Test
 	void gettersDevuelvenLosValoresAsignadosEnElConstructor() {
-		Vertice a = new Vertice("A");
-		Vertice b = new Vertice("B");
+
 		Arista arista = new Arista(a, b, 10);
 
 		assertEquals(a, arista.getVertice1());

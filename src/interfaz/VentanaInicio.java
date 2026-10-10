@@ -147,7 +147,7 @@ botonContinuar.setFocusPainted(false);
 
 		if (tipo == null || territorio.isEmpty() || latitudTexto.isEmpty() || longitudTexto.isEmpty()) {
 
-        	Mensajes.advertencia(this, "Debe completar todos los campos para continuar");          
+        	Mensaje.advertencia(this, "Debe completar todos los campos para continuar");          
         	return;
         }
 
@@ -159,7 +159,7 @@ botonContinuar.setFocusPainted(false);
 			if (!Double.isFinite(latitud) || !Double.isFinite(longitud) || latitud < -90 || latitud > 90|| longitud < -180 || longitud > 180) {
 
 
-            	Mensajes.error(this,"Coordenadas inválidas. Latitud: -90 a 90. Longitud: -180 a 180.");      
+            	Mensaje.error(this,"Coordenadas inválidas. Latitud: -90 a 90. Longitud: -180 a 180.");      
 return;
             }
 
@@ -169,7 +169,7 @@ return;
 
 		} catch (NumberFormatException ex) {
 
-        	Mensajes.error(this, "Las coordenadas deben ser números decimales válidos");        }
+        	Mensaje.error(this, "Las coordenadas deben ser números decimales válidos");        }
     }
 
 }

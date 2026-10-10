@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-public class Mensajes {
+public class Mensaje {
 	  private static final Color FONDO = new Color(232, 241, 250);
 
 	    private static final Color AZUL_OSCURO = new Color(25, 54, 91);

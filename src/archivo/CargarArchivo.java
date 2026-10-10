@@ -1,7 +1,4 @@
 package archivo;
-
-
-
 import negocio.Arista;
 import negocio.Grafo;
 import negocio.Vertice;
@@ -13,99 +10,97 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 public class CargarArchivo {
+	public static Grafo cargarDesdeArchivo(File archivo)
+
+			throws IOException {
+
+		if (archivo == null || !archivo.isFile()) {
+			throw new IOException("El archivo no existe.");
+		}
+
+		Grafo grafo = new Grafo();
+		Map<String, Vertice> vertices = new HashMap<>();
+
+		try (BufferedReader lector =  new BufferedReader(new FileReader(archivo))) {
+
+			String linea;
+			int numeroLinea = 0;
+
+			while ((linea = lector.readLine()) != null) {
+
+				numeroLinea++;
+				linea = linea.trim();
 
 
-	 public static Grafo cargarDesdeArchivo(File archivo)
+				if (linea.isEmpty() || linea.startsWith("#")) {
+					continue;
+				}
 
-	            throws IOException {
+				String[] datos = linea.split(",", -1);
 
-	        if (archivo == null || !archivo.isFile()) {
-	            throw new IOException("El archivo no existe.");
-	        }
+				try {
 
-	        Grafo grafo = new Grafo();
-	        Map<String, Vertice> vertices = new HashMap<>();
+					if (datos[0].trim().equalsIgnoreCase("VERTICE")) {
 
-	        try (BufferedReader lector =  new BufferedReader(new FileReader(archivo))) {
+						if (datos.length != 4) {
+							throw new IllegalArgumentException( "Formato de vértice incorrecto."
+									);
+						}
 
-	            String linea;
-	            int numeroLinea = 0;
+						String nombre = datos[1].trim();
+						double latitud = Double.parseDouble(datos[2].trim());
+						double longitud = Double.parseDouble(datos[3].trim());
 
-	            while ((linea = lector.readLine()) != null) {
+						if (nombre.isEmpty() || !Double.isFinite(latitud)|| !Double.isFinite(longitud)|| latitud < -90 || latitud > 90 || longitud < -180 || longitud > 180) {
+							throw new IllegalArgumentException( "Datos de vértice inválidos."  );
+						}
+						Vertice vertice = new Vertice(nombre, latitud, longitud);
 
-	                numeroLinea++;
-	                linea = linea.trim();
+						if (!grafo.agregarVertice(vertice)) {
+							throw new IllegalArgumentException( "Vértice repetido: " + nombre );
+						}
 
-	                
-	                if (linea.isEmpty() || linea.startsWith("#")) {
-	                    continue;
-	                }
+						vertices.put(nombre, vertice);
 
-	                String[] datos = linea.split(",", -1);
+					} else if (datos[0].trim().equalsIgnoreCase("ARISTA")) {
 
-	                try {
+						if (datos.length != 4) {
+							throw new IllegalArgumentException("Formato de arista incorrecto." );
+						}
 
-	                    if (datos[0].trim().equalsIgnoreCase("VERTICE")) {
+						String nombre1 = datos[1].trim();
+						String nombre2 = datos[2].trim();
 
-	                        if (datos.length != 4) {
-	                            throw new IllegalArgumentException( "Formato de vértice incorrecto."
-	                            );
-	                        }
+						double peso = Double.parseDouble(datos[3].trim());
 
-	                        String nombre = datos[1].trim();
-	                        double latitud = Double.parseDouble(datos[2].trim());
-	                        double longitud = Double.parseDouble(datos[3].trim());
+						if (!Double.isFinite(peso)) {
+							throw new IllegalArgumentException( "El peso debe ser finito."  );
+						}
 
-	                        if (nombre.isEmpty() || !Double.isFinite(latitud)|| !Double.isFinite(longitud)|| latitud < -90 || latitud > 90 || longitud < -180 || longitud > 180) {
-	                            throw new IllegalArgumentException( "Datos de vértice inválidos."  );
-	                        }
-	                        Vertice vertice = new Vertice(nombre, latitud, longitud);
+						Vertice v1 = vertices.get(nombre1);
+						Vertice v2 = vertices.get(nombre2);
 
-	                        if (!grafo.agregarVertice(vertice)) {
-	                            throw new IllegalArgumentException( "Vértice repetido: " + nombre );
-	                        }
+						if (v1 == null || v2 == null) {
+							throw new IllegalArgumentException( "La arista utiliza un vértice no cargado." );
+						}
+						Arista arista = new Arista(v1, v2, peso);
 
-	                        vertices.put(nombre, vertice);
+						if (!grafo.agregarArista(arista)) {
+							throw new IllegalArgumentException(  "Arista inválida o repetida." );
+						}
 
-	                    } else if (datos[0].trim().equalsIgnoreCase("ARISTA")) {
+					} else {
+						throw new IllegalArgumentException( "Tipo de registro desconocido." );
+					}
 
-	                        if (datos.length != 4) {
-	                            throw new IllegalArgumentException("Formato de arista incorrecto." );
-	                        }
+				} catch (IllegalArgumentException ex) {
 
-	                        String nombre1 = datos[1].trim();
-	                        String nombre2 = datos[2].trim();
+					throw new IOException("Error en la línea " + numeroLinea  + ": " + ex.getMessage(), ex);
+				}
+			}
+		}
 
-	                        double peso = Double.parseDouble(datos[3].trim());
-
-	                        if (!Double.isFinite(peso)) {
-	                            throw new IllegalArgumentException( "El peso debe ser finito."  );
-	                        }
-
-	                        Vertice v1 = vertices.get(nombre1);
-	                        Vertice v2 = vertices.get(nombre2);
-
-	                        if (v1 == null || v2 == null) {
-	                            throw new IllegalArgumentException( "La arista utiliza un vértice no cargado." );
-	                        }
-	                        Arista arista = new Arista(v1, v2, peso);
-
-	                        if (!grafo.agregarArista(arista)) {
-	                            throw new IllegalArgumentException(  "Arista inválida o repetida." );
-	                        }
-
-	                    } else {
-	                        throw new IllegalArgumentException( "Tipo de registro desconocido." );
-	                    }
-
-	                } catch (IllegalArgumentException ex) {
-
-	                    throw new IOException("Error en la línea " + numeroLinea  + ": " + ex.getMessage(), ex);
-	                }
-	            }
-	        }
-
-	        return grafo;
-	    }
+		return grafo;
+	}
 }
 

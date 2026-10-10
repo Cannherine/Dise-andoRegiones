@@ -16,10 +16,10 @@ class AlgoritmoKruskalTest {
 	@BeforeEach
 	void setUp() {
 		grafo = new Grafo();
-		a = new Vertice("A");
-		b = new Vertice("B");
-		c = new Vertice("C");
-		d = new Vertice("D");
+		a = new Vertice("A",0, 0);
+		b = new Vertice("B",0, 0);
+		c = new Vertice("C",0, 0);
+		d = new Vertice("D",0, 0);
 
 		grafo.agregarVertice(a);
 		grafo.agregarVertice(b);
