@@ -7,122 +7,122 @@ import org.junit.jupiter.api.Test;
 
 class GrafoTest {
 
-    private Grafo grafo;
-    private Vertice a, b, c;
-    
-    @BeforeEach
-    void setUp() {
-        grafo = new Grafo();
-        a = new Vertice("A",0 ,0);
-        b = new Vertice("B",0 ,0);
-        c = new Vertice("C",0 ,0);
-    }
+	private Grafo grafo;
+	private Vertice a, b, c;
 
-    @Test
-    void agregarVerticeNuevoDevuelveTrue() {
-        assertTrue(grafo.agregarVertice(a));
-    }
+	@BeforeEach
+	void setUp() {
+		grafo = new Grafo();
+		a = new Vertice("A", 0, 0);
+		b = new Vertice("B", 0, 0);
+		c = new Vertice("C", 0, 0);
+	}
 
-    @Test
-    void agregarVerticeRepetidoDevuelveFalse() {
-        Vertice otroA = new Vertice("A",0 ,0);
-        grafo.agregarVertice(a);
+	@Test
+	void agregarVerticeNuevoDevuelveTrue() {
+		assertTrue(grafo.agregarVertice(a));
+	}
 
-        assertFalse(grafo.agregarVertice(otroA));
-    }
+	@Test
+	void agregarVerticeRepetidoDevuelveFalse() {
+		Vertice otroA = new Vertice("A", 0, 0);
+		grafo.agregarVertice(a);
 
-    @Test
-    void agregarAristaValidaDevuelveTrue() {
-        grafo.agregarVertice(a);
-        grafo.agregarVertice(b);
-        Arista ab = new Arista(a, b, 5);
+		assertFalse(grafo.agregarVertice(otroA));
+	}
 
-        assertTrue(grafo.agregarArista(ab));
-    }
+	@Test
+	void agregarAristaValidaDevuelveTrue() {
+		grafo.agregarVertice(a);
+		grafo.agregarVertice(b);
+		Arista ab = new Arista(a, b, 5);
 
-    @Test
-    void agregarAristaConVerticeInexistenteDevuelveFalse() {
-        grafo.agregarVertice(a);
-        Arista ac = new Arista(a, c, 7);
+		assertTrue(grafo.agregarArista(ab));
+	}
 
-        assertFalse(grafo.agregarArista(ac));
-    }
+	@Test
+	void agregarAristaConVerticeInexistenteDevuelveFalse() {
+		grafo.agregarVertice(a);
+		Arista ac = new Arista(a, c, 7);
 
-    @Test
-    void agregarAristaConAmbosVerticesInexistentesDevuelveFalse() {
-        Arista ab = new Arista(a, b, 5);
-        assertFalse(grafo.agregarArista(ab));
-    }
+		assertFalse(grafo.agregarArista(ac));
+	}
 
-    @Test
-    void agregarAristaConMismoVerticeDevuelveFalse() {
-        grafo.agregarVertice(a);
-        Arista aa = new Arista(a, a, 5);
+	@Test
+	void agregarAristaConAmbosVerticesInexistentesDevuelveFalse() {
+		Arista ab = new Arista(a, b, 5);
+		assertFalse(grafo.agregarArista(ab));
+	}
 
-        assertFalse(grafo.agregarArista(aa));
-    }
+	@Test
+	void agregarAristaConMismoVerticeDevuelveFalse() {
+		grafo.agregarVertice(a);
+		Arista aa = new Arista(a, a, 5);
 
-    @Test
-    void agregarAristaRepetidaDevuelveFalse() {
-        grafo.agregarVertice(a);
-        grafo.agregarVertice(b);
-        Arista ab = new Arista(a, b, 5);
-        Arista ba = new Arista(b, a, 20);
+		assertFalse(grafo.agregarArista(aa));
+	}
 
-        assertTrue(grafo.agregarArista(ab));
+	@Test
+	void agregarAristaRepetidaDevuelveFalse() {
+		grafo.agregarVertice(a);
+		grafo.agregarVertice(b);
+		Arista ab = new Arista(a, b, 5);
+		Arista ba = new Arista(b, a, 20);
 
-        assertFalse(grafo.agregarArista(ba));
-    }
+		assertTrue(grafo.agregarArista(ab));
 
-    @Test
-    void obtenerAristasDeUnVertice() {
-        grafo.agregarVertice(a);
-        grafo.agregarVertice(b);
-        grafo.agregarVertice(c);
-        grafo.agregarArista(new Arista(a, b, 5));
-        grafo.agregarArista(new Arista(a, c, 8));
+		assertFalse(grafo.agregarArista(ba));
+	}
 
-        assertEquals(2, grafo.obtenerAristas(a).size());
-    }
+	@Test
+	void obtenerAristasDeUnVertice() {
+		grafo.agregarVertice(a);
+		grafo.agregarVertice(b);
+		grafo.agregarVertice(c);
+		grafo.agregarArista(new Arista(a, b, 5));
+		grafo.agregarArista(new Arista(a, c, 8));
 
-    @Test
-    void agregarAristaGuardaLaAristaEnAmbosVertices() {
-        grafo.agregarVertice(a);
-        grafo.agregarVertice(b);
-        Arista ab = new Arista(a, b, 10);
-        grafo.agregarArista(ab);
+		assertEquals(2, grafo.obtenerAristas(a).size());
+	}
 
-        assertTrue(grafo.obtenerAristas(a).contains(ab));
-        assertTrue(grafo.obtenerAristas(b).contains(ab));
-    }
+	@Test
+	void agregarAristaGuardaLaAristaEnAmbosVertices() {
+		grafo.agregarVertice(a);
+		grafo.agregarVertice(b);
+		Arista ab = new Arista(a, b, 10);
+		grafo.agregarArista(ab);
 
-    @Test
-    void obtenerTodasLasAristasSinRepetir() {
-        grafo.agregarVertice(a);
-        grafo.agregarVertice(b);
-        grafo.agregarVertice(c);
-        grafo.agregarArista(new Arista(a, b, 6));
-        grafo.agregarArista(new Arista(a, c, 3));
+		assertTrue(grafo.obtenerAristas(a).contains(ab));
+		assertTrue(grafo.obtenerAristas(b).contains(ab));
+	}
 
-        assertEquals(2, grafo.obtenerTodasAristas().size());
-    }
+	@Test
+	void obtenerTodasLasAristasSinRepetir() {
+		grafo.agregarVertice(a);
+		grafo.agregarVertice(b);
+		grafo.agregarVertice(c);
+		grafo.agregarArista(new Arista(a, b, 6));
+		grafo.agregarArista(new Arista(a, c, 3));
 
-    @Test
-    void obtenerTodosLosVertices() {
-        grafo.agregarVertice(a);
-        grafo.agregarVertice(b);
-        grafo.agregarVertice(c);
-        assertEquals(3, grafo.obtenerVertices().size());
-    }
+		assertEquals(2, grafo.obtenerTodasAristas().size());
+	}
 
-    @Test
-    void obtenerAristasDeVerticeInexistenteDevuelveNull() {
-    	assertThrows(IllegalArgumentException.class, () -> grafo.obtenerAristas(a));
-    }
+	@Test
+	void obtenerTodosLosVertices() {
+		grafo.agregarVertice(a);
+		grafo.agregarVertice(b);
+		grafo.agregarVertice(c);
+		assertEquals(3, grafo.obtenerVertices().size());
+	}
 
-    @Test
-    void obtenerTodasAristasDeGrafoVacioDevuelveListaVacia() {
+	@Test
+	void obtenerAristasDeVerticeInexistenteDevuelveNull() {
+		assertThrows(IllegalArgumentException.class, () -> grafo.obtenerAristas(a));
+	}
 
-        assertTrue(grafo.obtenerTodasAristas().isEmpty());
-    }
+	@Test
+	void obtenerTodasAristasDeGrafoVacioDevuelveListaVacia() {
+
+		assertTrue(grafo.obtenerTodasAristas().isEmpty());
+	}
 }

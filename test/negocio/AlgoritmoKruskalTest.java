@@ -26,15 +26,13 @@ class AlgoritmoKruskalTest {
 		grafo.agregarVertice(c);
 		grafo.agregarVertice(d);
 
-		// Agregamos aristas creando un ciclo (A-B-C-A) para forzar a Kruskal a filtrar la más pesada
 		grafo.agregarArista(new Arista(a, b, 3));
 		grafo.agregarArista(new Arista(a, c, 5));
-		grafo.agregarArista(new Arista(c, b, 2)); // Arista liviana que cierra el ciclo
+		grafo.agregarArista(new Arista(c, b, 2));
 		grafo.agregarArista(new Arista(b, d, 8));
 	}
-
 	@Test
-	void testCalcularAGM_CantidadAristasYPesoMinimo() {
+	void testCalcularAGMCantidadAristasYPesoMinimo() {
 		Grafo agm = AlgoritmoKruskal.calcularAGM(grafo);
 
 		assertEquals(3, agm.obtenerTodasAristas().size());
@@ -45,9 +43,8 @@ class AlgoritmoKruskalTest {
 		}
 		assertEquals(13, pesoTotal);
 	}
-
 	@Test
-	void testGenerarRegiones_KValido() {
+	void testGenerarRegionesKValido() {
 		int k = 2; 
 		List<List<Vertice>> regiones = AlgoritmoKruskal.generarRegiones(grafo, k);
 
@@ -59,9 +56,8 @@ class AlgoritmoKruskalTest {
 		}
 		assertEquals(4, totalVertices);
 	}
-
 	@Test
-	void testGenerarRegiones_KIgualAVertices() {
+	void testGenerarRegionesKIgualAVertices() {
 		int k = 4; 
 		List<List<Vertice>> regiones = AlgoritmoKruskal.generarRegiones(grafo, k);
 
@@ -71,9 +67,8 @@ class AlgoritmoKruskalTest {
 			assertEquals(1, region.size());
 		}
 	}
-
 	@Test
-	void testGenerarRegiones_KInvalido_LanzaExcepcion() {
+	void testGenerarRegionesKInvalidoLanzaExcepcion() {
 		
 		assertThrows(IllegalArgumentException.class, () -> {
 			AlgoritmoKruskal.generarRegiones(grafo, 0);

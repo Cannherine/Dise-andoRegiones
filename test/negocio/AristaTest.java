@@ -81,4 +81,19 @@ class AristaTest {
 		assertEquals(b, arista.getVertice2());
 		assertEquals(10, arista.getPeso());
 	}
+
+	@Test
+	void pesoDecimalSeGuardaCorrectamente() {
+		Arista arista = new Arista(a, b, 0.75);
+
+		assertEquals(0.75, arista.getPeso());
+	}
+
+	@Test
+	void aristasQueSoloComparteUnVerticeSonDiferentes() {
+		Arista ab = new Arista(a, b, 5);
+		Arista bc = new Arista(b, c, 5);
+
+		assertNotEquals(ab, bc);
+	}
 }

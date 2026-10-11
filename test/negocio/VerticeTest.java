@@ -50,7 +50,7 @@ class VerticeTest {
 	@Test
 	void verticeNoEsIgualANull() {
 		Vertice v = new Vertice("A", 0, 0);
-		assertNotEquals(null, v); 
+		assertNotEquals(null, v);
 	}
 
 	@Test

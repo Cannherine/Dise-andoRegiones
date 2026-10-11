@@ -9,14 +9,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class UnionFindTest {
-	private Vertice a,b,c;
+	private Vertice a, b, c;
+
 	@BeforeEach
 	void setUp() {
 		a = new Vertice("A", 0, 0);
 		b = new Vertice("B", 0, 0);
 		c = new Vertice("C", 0, 0);
 	}
-	
+
 	@Test
 	void verticesComienzanSeparados() {
 
