@@ -242,25 +242,19 @@ public class VentanaPrincipal extends JFrame {
 		panelConexion.add(new JLabel(""));
 		panelConexion.add(botonConsultarRegiones);
 		JButton botonCargarArchivo = new JButton("Cargar archivo");
+		//Mensaje.personalizarBotonCargar(botonCargarArchivo);
 		panelConexion.add(new JLabel(""));
 		panelConexion.add(botonCargarArchivo);
+		Mensaje.personalizarBoton(botonAgregarCiudades, new Color(37, 99, 235));
 
-		botonAgregarCiudades.setBackground(new Color(37, 99, 235));
-		botonAgregarCiudades.setForeground(Color.WHITE);
-		botonAgregarCiudades.setFont(new Font("Segoe UI", Font.BOLD, 13));
+		Mensaje.personalizarBoton(botonAgregarConexion, new Color(37, 99, 235));
 
-		botonAgregarConexion.setBackground(new Color(37, 99, 235));
-		botonAgregarConexion.setForeground(Color.WHITE);
-		botonAgregarConexion.setFont(new Font("Segoe UI", Font.BOLD, 13));
+		Mensaje.personalizarBoton(botonGenerarRegiones, new Color(22, 163, 74));
 
-		botonGenerarRegiones.setBackground(new Color(22, 163, 74));
-		botonGenerarRegiones.setForeground(Color.WHITE);
-		botonGenerarRegiones.setFont(new Font("Segoe UI", Font.BOLD, 13));
+		Mensaje.personalizarBoton(botonConsultarRegiones, new Color(71, 85, 105));
 
-		botonConsultarRegiones.setBackground(new Color(71, 85, 105));
-		botonConsultarRegiones.setForeground(Color.WHITE);
-		botonConsultarRegiones.setFont(new Font("Segoe UI", Font.BOLD, 13));
-
+		Mensaje.personalizarBoton(botonCargarArchivo, new Color(25, 54, 91));
+		
 		JPanel panelResultados = new JPanel();
 		panelCentral.add(panelResultados);
 		panelResultados.setLayout(new BorderLayout());
@@ -294,7 +288,7 @@ public class VentanaPrincipal extends JFrame {
 			String nombre = txtNombre.getText().trim();
 
 			if (nombre.isEmpty()) {
-				JOptionPane.showMessageDialog(this, "Ingresá el nombre de " + singular);
+				Mensaje.advertencia(this, "Ingresá el nombre de " + singular);
 				return;
 			}
 
@@ -320,7 +314,7 @@ public class VentanaPrincipal extends JFrame {
 					txtX.setText("");
 					txtY.setText("");
 				} else {
-					JOptionPane.showMessageDialog(this, singular + " ya existe");
+					Mensaje.advertencia(this, singular + " ya existe");
 				}
 
 			} catch (NumberFormatException ex) {
@@ -334,12 +328,12 @@ public class VentanaPrincipal extends JFrame {
 			Vertice v2 = (Vertice) comboCiudad2.getSelectedItem();
 
 			if (v1 == null || v2 == null) {
-				JOptionPane.showMessageDialog(this, "Primero tenés que agregar dos vértices");
+				Mensaje.advertencia(this, "Primero tenés que agregar dos vértices");
 				return;
 			}
 
 			if (v1.equals(v2)) {
-				JOptionPane.showMessageDialog(this, "No podés conectar un vértice consigo mismo");
+				Mensaje.advertencia(this, "No podés conectar un vértice consigo mismo");
 				return;
 			}
 
@@ -353,17 +347,16 @@ public class VentanaPrincipal extends JFrame {
 
 					dibujarConexion(v1, v2);
 					modeloConexiones.addElement(v1.getNombre() + " - " + v2.getNombre() + " | Peso: " + peso);
-					JOptionPane.showMessageDialog(this, "Conexión agregada correctamente");
+					Mensaje.exito(this, "Conexión agregada correctamente");
 
 					txtPeso.setText("");
 
 				} else {
-					JOptionPane.showMessageDialog(this, "Esta conexión ya existe");
+					Mensaje.advertencia(this, "Esta conexión ya existe");
 				}
 
 			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(null, "El peso debe ser un numero valido ");
-			}
+				Mensaje.error(this, "El peso debe ser un número válido");			}
 
 		});
 		botonGenerarRegiones.addActionListener(e -> {
@@ -397,31 +390,20 @@ public class VentanaPrincipal extends JFrame {
 				}
 
 
-				JTextArea areaResultado = new JTextArea(resultado.toString());
-
-				areaResultado.setEditable(false);
-				areaResultado.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-				areaResultado.setBackground(new Color(232, 241, 250));
-
-				JScrollPane scrollResultado = new JScrollPane(areaResultado);
-
-				scrollResultado.setPreferredSize(new java.awt.Dimension(400, 350));
-
-				JOptionPane.showMessageDialog(this, scrollResultado, "Regiones generadas",
-						JOptionPane.INFORMATION_MESSAGE);
-
+				Mensaje.mostrarRegiones(  this,  resultado.toString(),"Regiones generadas");
+				
 			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(this, "Ingresá un número entero para k");
+			    Mensaje.error(this, "Ingresá un número entero para k");
 
 			} catch (IllegalArgumentException ex) {
-				JOptionPane.showMessageDialog(this, ex.getMessage());
+			    Mensaje.error(this, ex.getMessage());
 			}
 		});
 
 		botonConsultarRegiones.addActionListener(e -> {
 
 			if (regionesGuardadas == null) {
-				JOptionPane.showMessageDialog(this, "Primero debés generar las regiones.");
+				Mensaje.advertencia(this, "Primero debés generar las regiones.");
 				return;
 			}
 
@@ -438,25 +420,15 @@ public class VentanaPrincipal extends JFrame {
 				resultado.append("\n");
 			}
 
-			JTextArea areaConsulta = new JTextArea(resultado.toString());
-
-			areaConsulta.setEditable(false);
-			areaConsulta.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-			areaConsulta.setBackground(new Color(232, 241, 250));
-			areaConsulta.setCaretPosition(0);
-
-			JScrollPane scrollConsulta = new JScrollPane(areaConsulta);
-
-			scrollConsulta.setPreferredSize(new java.awt.Dimension(400, 350));
-
-			JOptionPane.showMessageDialog(this, scrollConsulta, "Consultar Regiones", JOptionPane.INFORMATION_MESSAGE);
-
+			
+			Mensaje.mostrarRegiones(this, resultado.toString(), "Consultar Regiones");
 		});
 
 		botonCargarArchivo.addActionListener(e -> {
 			JFileChooser selector = new JFileChooser(new File(System.getProperty("user.dir")));
-		    selector.setDialogTitle("Seleccionar archivo del grafo");
+			selector.setDialogTitle("Seleccionar archivo del grafo");
 		    selector.setFileFilter(new FileNameExtensionFilter("Archivos de texto (*.txt)", "txt"));
+			Mensaje.personalizarSelector(selector);
 
 		    if (selector.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
 		        return;
@@ -496,20 +468,16 @@ public class VentanaPrincipal extends JFrame {
 					Vertice v1 = arista.getVertice1();
 					Vertice v2 = arista.getVertice2();
 
-					modeloConexiones
-					.addElement(v1.getNombre() + " - " + v2.getNombre() + " | Peso: " + arista.getPeso());
+					modeloConexiones.addElement(v1.getNombre() + " - " + v2.getNombre() + " | Peso: " + arista.getPeso());
 
 					dibujarConexion(v1, v2);
 				}
 				mapa.setDisplayToFitMapMarkers();
 				mapa.repaint();
-
-				JOptionPane.showMessageDialog(this, "Archivo cargado correctamente.", "Carga exitosa",
-						JOptionPane.INFORMATION_MESSAGE);
+				Mensaje.exito(this, "Archivo cargado correctamente.");
 
 			} catch (IOException ex) {
-				JOptionPane.showMessageDialog(this, "Error al cargar el archivo:\n" + ex.getMessage(), "Error",
-						JOptionPane.ERROR_MESSAGE);
+				Mensaje.error(this, "Error al cargar el archivo:\n" + ex.getMessage());
 			}
 		});
 
