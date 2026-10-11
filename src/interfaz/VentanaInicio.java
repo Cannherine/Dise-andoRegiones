@@ -42,39 +42,39 @@ public class VentanaInicio extends JFrame {
 		setBounds(100, 100, 600, 420);
 		setLocationRelativeTo(null);
 
-        contentPane = new JPanel();
-        contentPane.setBackground(new Color(232, 241, 250));
-        contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
-        setContentPane(contentPane);
-        contentPane.setLayout(new BorderLayout(15, 15));
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(232, 241, 250));
+		contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
+		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(15, 15));
 
-        JPanel panelTitulo = new JPanel();
-        panelTitulo.setBackground(new Color(25, 54, 91));
+		JPanel panelTitulo = new JPanel();
+		panelTitulo.setBackground(new Color(25, 54, 91));
 
-        contentPane.add(panelTitulo, BorderLayout.NORTH);
+		contentPane.add(panelTitulo, BorderLayout.NORTH);
 
-        JLabel lblTitulo = new JLabel("BIENVENIDO A DISEÑANDO REGIONES");
-        lblTitulo.setForeground(Color.WHITE);
-        lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 18));
-        panelTitulo.add(lblTitulo);
+		JLabel lblTitulo = new JLabel("BIENVENIDO A DISEÑANDO REGIONES");
+		lblTitulo.setForeground(Color.WHITE);
+		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 18));
+		panelTitulo.add(lblTitulo);
 
-        JPanel panelCentral = new JPanel();
-        panelCentral.setBackground(new Color(232, 241, 250));
-        contentPane.add(panelCentral, BorderLayout.CENTER);
-        panelCentral.setLayout(new BorderLayout(10, 15));
+		JPanel panelCentral = new JPanel();
+		panelCentral.setBackground(new Color(232, 241, 250));
+		contentPane.add(panelCentral, BorderLayout.CENTER);
+		panelCentral.setLayout(new BorderLayout(10, 15));
 
-        JLabel lblDescripcion = new JLabel("<html><center>" + "Este programa permite construir un grafo de territorios, "
-                + "establecer conexiones con pesos de similitud "+ "y agruparlos en regiones utilizando el algoritmo de Kruskal."
-                + "</center></html>"
-        );
-        lblDescripcion.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-        lblDescripcion.setForeground(new Color(25, 54, 91));
-        panelCentral.add(lblDescripcion, BorderLayout.NORTH);
+		JLabel lblDescripcion = new JLabel("<html><center>" + "Este programa permite construir un grafo de territorios, "
+				+ "establecer conexiones con pesos de similitud "+ "y agruparlos en regiones utilizando el algoritmo de Kruskal."
+				+ "</center></html>"
+				);
+		lblDescripcion.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblDescripcion.setForeground(new Color(25, 54, 91));
+		panelCentral.add(lblDescripcion, BorderLayout.NORTH);
 
-        JPanel panelDatos = new JPanel();
-        panelDatos.setBackground(new Color(232, 241, 250));
-        panelCentral.add(panelDatos, BorderLayout.CENTER);
-        panelDatos.setLayout(new GridLayout(4, 2, 10, 15));
+		JPanel panelDatos = new JPanel();
+		panelDatos.setBackground(new Color(232, 241, 250));
+		panelCentral.add(panelDatos, BorderLayout.CENTER);
+		panelDatos.setLayout(new GridLayout(4, 2, 10, 15));
 
 
 		JLabel lblTipo = new JLabel("Tipo de territorio:");
@@ -104,33 +104,33 @@ public class VentanaInicio extends JFrame {
 
 		txtLongitud = new JTextField();
 		panelDatos.add(txtLongitud);
-Font fuenteEtiquetas =    new Font("Segoe UI", Font.BOLD, 13);
+		Font fuenteEtiquetas =    new Font("Segoe UI", Font.BOLD, 13);
 
-Color colorEtiquetas = new Color(25, 54, 91);
+		Color colorEtiquetas = new Color(25, 54, 91);
 
-lblTipo.setFont(fuenteEtiquetas);
-lblTipo.setForeground(colorEtiquetas);
+		lblTipo.setFont(fuenteEtiquetas);
+		lblTipo.setForeground(colorEtiquetas);
 
-lblTerritorio.setFont(fuenteEtiquetas);
-lblTerritorio.setForeground(colorEtiquetas);
+		lblTerritorio.setFont(fuenteEtiquetas);
+		lblTerritorio.setForeground(colorEtiquetas);
 
-lblLatitud.setFont(fuenteEtiquetas);
-lblLatitud.setForeground(colorEtiquetas);
+		lblLatitud.setFont(fuenteEtiquetas);
+		lblLatitud.setForeground(colorEtiquetas);
 
-lblLongitud.setFont(fuenteEtiquetas);
-lblLongitud.setForeground(colorEtiquetas);
+		lblLongitud.setFont(fuenteEtiquetas);
+		lblLongitud.setForeground(colorEtiquetas);
 
-        JPanel panelBoton = new JPanel();
-        panelBoton.setBackground(new Color(232, 241, 250));
-        contentPane.add(panelBoton, BorderLayout.SOUTH);
+		JPanel panelBoton = new JPanel();
+		panelBoton.setBackground(new Color(232, 241, 250));
+		contentPane.add(panelBoton, BorderLayout.SOUTH);
 
-        JButton botonContinuar = new JButton("Continuar");
+		JButton botonContinuar = new JButton("Continuar");
 
-botonContinuar.setBackground(new Color(22, 163, 74));
-botonContinuar.setForeground(Color.WHITE);
-botonContinuar.setFont(new Font("Segoe UI", Font.BOLD, 14));
-botonContinuar.setFocusPainted(false);
-        panelBoton.add(botonContinuar);
+		botonContinuar.setBackground(new Color(22, 163, 74));
+		botonContinuar.setForeground(Color.WHITE);
+		botonContinuar.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		botonContinuar.setFocusPainted(false);
+		panelBoton.add(botonContinuar);
 
 
 		botonContinuar.addActionListener(e -> continuar());
@@ -147,9 +147,9 @@ botonContinuar.setFocusPainted(false);
 
 		if (tipo == null || territorio.isEmpty() || latitudTexto.isEmpty() || longitudTexto.isEmpty()) {
 
-        	Mensaje.advertencia(this, "Debe completar todos los campos para continuar");          
-        	return;
-        }
+			Mensaje.advertencia(this, "Debe completar todos los campos para continuar");          
+			return;
+		}
 
 
 		try {
@@ -159,9 +159,9 @@ botonContinuar.setFocusPainted(false);
 			if (!Double.isFinite(latitud) || !Double.isFinite(longitud) || latitud < -90 || latitud > 90|| longitud < -180 || longitud > 180) {
 
 
-            	Mensaje.error(this,"Coordenadas inválidas. Latitud: -90 a 90. Longitud: -180 a 180.");      
-return;
-            }
+				Mensaje.error(this,"Coordenadas inválidas. Latitud: -90 a 90. Longitud: -180 a 180.");      
+				return;
+			}
 
 
 			VentanaPrincipal ventana = new VentanaPrincipal(tipo, territorio, latitud, longitud);            ventana.setVisible(true);
@@ -169,7 +169,7 @@ return;
 
 		} catch (NumberFormatException ex) {
 
-        	Mensaje.error(this, "Las coordenadas deben ser números decimales válidos");        }
-    }
+			Mensaje.error(this, "Las coordenadas deben ser números decimales válidos");        }
+	}
 
 }

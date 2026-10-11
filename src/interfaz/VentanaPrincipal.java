@@ -272,8 +272,8 @@ public class VentanaPrincipal extends JFrame {
 		panelConexionesLista.setBackground(fondo);
 
 		panelResultados.setBackground(fondo);
-		
-		
+
+
 		botonAgregarCiudades.addActionListener(e -> {
 
 			String nombre = txtNombre.getText().trim();
@@ -368,7 +368,7 @@ public class VentanaPrincipal extends JFrame {
 
 				actualizarAristasRegiones(regiones);
 
-				
+
 				mostrarRegiones("Regiones generadas", regiones);
 
 			} catch (NumberFormatException ex) {
@@ -391,14 +391,14 @@ public class VentanaPrincipal extends JFrame {
 
 		botonCargarArchivo.addActionListener(e -> {
 			JFileChooser selector = new JFileChooser(new File(System.getProperty("user.dir")));
-		    selector.setDialogTitle("Seleccionar archivo del grafo");
-		    selector.setFileFilter(new FileNameExtensionFilter("Archivos de texto (*.txt)", "txt"));
+			selector.setDialogTitle("Seleccionar archivo del grafo");
+			selector.setFileFilter(new FileNameExtensionFilter("Archivos de texto (*.txt)", "txt"));
 
-		    if (selector.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
-		        return;
-		    }
+			if (selector.showOpenDialog(this) != JFileChooser.APPROVE_OPTION) {
+				return;
+			}
 
-		    File archivo = selector.getSelectedFile();
+			File archivo = selector.getSelectedFile();
 
 			try {
 				grafo = CargarArchivo.cargarDesdeArchivo(archivo);
@@ -508,26 +508,26 @@ public class VentanaPrincipal extends JFrame {
 
 		mapa.repaint();
 	}
-	
+
 	private void mostrarRegiones(String titulo, List<List<Vertice>> regiones) {
-	    StringBuilder texto = new StringBuilder();
-	    for (int i = 0; i < regiones.size(); i++) {
-	        texto.append("REGIÓN ").append(i + 1).append(":\n");
-	        for (Vertice v : regiones.get(i)) {
-	            texto.append(" - ").append(v.getNombre()).append("\n");
-	        }
-	        texto.append("\n");
-	    }
+		StringBuilder texto = new StringBuilder();
+		for (int i = 0; i < regiones.size(); i++) {
+			texto.append("REGIÓN ").append(i + 1).append(":\n");
+			for (Vertice v : regiones.get(i)) {
+				texto.append(" - ").append(v.getNombre()).append("\n");
+			}
+			texto.append("\n");
+		}
 
-	    JTextArea area = new JTextArea(texto.toString());
-	    area.setEditable(false);
-	    area.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-	    area.setBackground(new Color(232, 241, 250));
-	    area.setCaretPosition(0);
+		JTextArea area = new JTextArea(texto.toString());
+		area.setEditable(false);
+		area.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		area.setBackground(new Color(232, 241, 250));
+		area.setCaretPosition(0);
 
-	    JScrollPane scroll = new JScrollPane(area);
-	    scroll.setPreferredSize(new java.awt.Dimension(400, 350));
+		JScrollPane scroll = new JScrollPane(area);
+		scroll.setPreferredSize(new java.awt.Dimension(400, 350));
 
-	    JOptionPane.showMessageDialog(this, scroll, titulo, JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(this, scroll, titulo, JOptionPane.INFORMATION_MESSAGE);
 	}
 }

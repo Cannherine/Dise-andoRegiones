@@ -38,11 +38,11 @@ public class Grafo {
 	}
 
 	public List<Arista> obtenerAristas(Vertice vertice) {
-	    List<Arista> aristas = adyacencias.get(vertice);
-	    if (aristas == null) {
-	        throw new IllegalArgumentException("El vértice no existe en el grafo");
-	    }
-	    return new ArrayList<>(aristas); 
+		List<Arista> aristas = adyacencias.get(vertice);
+		if (aristas == null) {
+			throw new IllegalArgumentException("El vértice no existe en el grafo");
+		}
+		return new ArrayList<>(aristas); 
 	}
 
 	public List<Arista> obtenerTodasAristas() {
