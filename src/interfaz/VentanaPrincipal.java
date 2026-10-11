@@ -2,7 +2,6 @@ package interfaz;
 
 import java.awt.BorderLayout;
 
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.GridLayout;
 
@@ -21,7 +20,6 @@ import org.openstreetmap.gui.jmapviewer.JMapViewer;
 
 import javax.swing.JOptionPane;
 import javax.swing.JList;
-import javax.swing.AbstractButton;
 import javax.swing.DefaultListModel;
 import negocio.Grafo;
 import negocio.Vertice;
@@ -59,19 +57,6 @@ public class VentanaPrincipal extends JFrame {
 	private JComboBox<Vertice> comboCiudad1;
 	private JComboBox<Vertice> comboCiudad2;
 	private List<List<Vertice>> regionesGuardadas;
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaInicio frame = new VentanaInicio();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	public VentanaPrincipal(String tipo, String territorio, double latitud, double longitud) {
 		grafo = new Grafo();
@@ -111,11 +96,10 @@ public class VentanaPrincipal extends JFrame {
 		setLocationRelativeTo(null);
 
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(232, 241, 250)); // color
+		contentPane.setBackground(new Color(232, 241, 250));
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(10, 10));
-		//// color
 
 		JPanel panelTitulo = new JPanel();
 		panelTitulo.setBackground(new Color(25, 54, 91));
@@ -133,7 +117,7 @@ public class VentanaPrincipal extends JFrame {
 		panelCentral.add(panelCarga);
 		panelCarga.setLayout(new BorderLayout(10, 10));
 
-		JLabel lblCarga = new JLabel("CARGA DEL GRAFO");// letra
+		JLabel lblCarga = new JLabel("CARGA DEL GRAFO");
 		lblCarga.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		lblCarga.setForeground(new Color(25, 54, 91));
 		panelCarga.add(lblCarga, BorderLayout.NORTH);
@@ -152,13 +136,13 @@ public class VentanaPrincipal extends JFrame {
 		txtNombre = new JTextField();
 		panelCiudad.add(txtNombre);
 
-		JLabel lblX = new JLabel("Coordenada X:");
+		JLabel lblX = new JLabel("Coordenada X (Latitud):");
 		panelCiudad.add(lblX);
 
 		txtX = new JTextField();
 		panelCiudad.add(txtX);
 
-		JLabel lblY = new JLabel("Coordenada Y:");
+		JLabel lblY = new JLabel("Coordenada Y (Longitud):");
 		panelCiudad.add(lblY);
 
 		txtY = new JTextField();
@@ -282,7 +266,8 @@ public class VentanaPrincipal extends JFrame {
 		panelConexionesLista.setBackground(fondo);
 
 		panelResultados.setBackground(fondo);
-
+		
+		
 		botonAgregarCiudades.addActionListener(e -> {
 
 			String nombre = txtNombre.getText().trim();
@@ -376,6 +361,7 @@ public class VentanaPrincipal extends JFrame {
 
 				actualizarAristasRegiones(regiones);
 
+
 				StringBuilder resultado = new StringBuilder();
 
 				for (int i = 0; i < regiones.size(); i++) {
@@ -392,6 +378,7 @@ public class VentanaPrincipal extends JFrame {
 
 				Mensaje.mostrarRegiones(  this,  resultado.toString(),"Regiones generadas");
 				
+
 			} catch (NumberFormatException ex) {
 			    Mensaje.error(this, "Ingresá un número entero para k");
 
@@ -406,7 +393,6 @@ public class VentanaPrincipal extends JFrame {
 				Mensaje.advertencia(this, "Primero debés generar las regiones.");
 				return;
 			}
-
 			StringBuilder resultado = new StringBuilder();
 
 			for (int i = 0; i < regionesGuardadas.size(); i++) {
@@ -422,6 +408,7 @@ public class VentanaPrincipal extends JFrame {
 
 			
 			Mensaje.mostrarRegiones(this, resultado.toString(), "Consultar Regiones");
+
 		});
 
 		botonCargarArchivo.addActionListener(e -> {
@@ -540,4 +527,5 @@ public class VentanaPrincipal extends JFrame {
 
 		mapa.repaint();
 	}
+
 }

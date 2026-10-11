@@ -7,6 +7,7 @@ public class Vertice {
 	private double y;
 
 	public Vertice(String nombre, double x, double y) {
+		
 		this.nombre = nombre;
 		this.x = x;
 		this.y = y;
@@ -35,11 +36,11 @@ public class Vertice {
 			return false; 
 		}
 		Vertice otra= (Vertice) obj;
-		return nombre.equals(otra.nombre);
+		return nombre.equalsIgnoreCase(otra.nombre);
 	}
 	@Override
 	public int hashCode() {
-		return nombre.hashCode();
+		return nombre.toLowerCase(java.util.Locale.ROOT).hashCode();
 	}
 
 
