@@ -16,6 +16,7 @@ public class Vertice {
 	public String getNombre() {
 		return nombre;
 	}
+
 	public double getX() {
 		return x;
 	}
@@ -23,26 +24,27 @@ public class Vertice {
 	public double getY() {
 		return y;
 	}
+
 	@Override
 
-	public boolean equals (Object obj) {
+	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
 		}
 		if (obj == null) {
 			return false;
 		}
-		if (! (obj instanceof Vertice )) {
-			return false; 
+		if (!(obj instanceof Vertice)) {
+			return false;
 		}
-		Vertice otra= (Vertice) obj;
+		Vertice otra = (Vertice) obj;
 		return nombre.equalsIgnoreCase(otra.nombre);
 	}
+
 	@Override
 	public int hashCode() {
 		return nombre.toLowerCase(java.util.Locale.ROOT).hashCode();
 	}
-
 
 	@Override
 	public String toString() {
