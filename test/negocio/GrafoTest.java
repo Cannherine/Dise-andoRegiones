@@ -8,16 +8,14 @@ import org.junit.jupiter.api.Test;
 class GrafoTest {
 
     private Grafo grafo;
-    private Vertice a;
-    private Vertice b;
-    private Vertice c;
-
+    private Vertice a, b, c;
+    
     @BeforeEach
     void setUp() {
         grafo = new Grafo();
-        a = new Vertice("A");
-        b = new Vertice("B");
-        c = new Vertice("C");
+        a = new Vertice("A",0 ,0);
+        b = new Vertice("B",0 ,0);
+        c = new Vertice("C",0 ,0);
     }
 
     @Test
@@ -27,7 +25,7 @@ class GrafoTest {
 
     @Test
     void agregarVerticeRepetidoDevuelveFalse() {
-        Vertice otroA = new Vertice("A");
+        Vertice otroA = new Vertice("A",0 ,0);
         grafo.agregarVertice(a);
 
         assertFalse(grafo.agregarVertice(otroA));
@@ -73,8 +71,6 @@ class GrafoTest {
 
         assertTrue(grafo.agregarArista(ab));
 
-        // A-B y B-A representan la misma conexión,
-        // aunque se intente ingresar otro peso.
         assertFalse(grafo.agregarArista(ba));
     }
 
@@ -121,7 +117,7 @@ class GrafoTest {
 
     @Test
     void obtenerAristasDeVerticeInexistenteDevuelveNull() {
-        assertNull(grafo.obtenerAristas(a));
+    	assertThrows(IllegalArgumentException.class, () -> grafo.obtenerAristas(a));
     }
 
     @Test

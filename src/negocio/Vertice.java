@@ -1,7 +1,8 @@
 package negocio;
+
 public class Vertice {
 
-	private String nombre; 
+	private final String nombre;
 	private double x;
 	private double y;
 
@@ -10,6 +11,7 @@ public class Vertice {
 		this.x = x;
 		this.y = y;
 	}
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -39,6 +41,7 @@ public class Vertice {
 	public int hashCode() {
 		return nombre.hashCode();
 	}
+
 
 	@Override
 	public String toString() {

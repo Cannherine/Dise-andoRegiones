@@ -6,8 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TeoremaKruskal {
-
+public class AlgoritmoKruskal {
 
 	public static Grafo calcularAGM(Grafo grafo) {
 		Grafo agm = new Grafo();
@@ -34,20 +33,19 @@ public class TeoremaKruskal {
 		return agm;
 	}
 
-
 	public static List<List<Vertice>> generarRegiones(Grafo grafo, int k) {
 		List<Vertice> vertices = grafo.obtenerVertices();
 
 		if (k <= 0 || k > vertices.size()) {
-			throw new IllegalArgumentException("El número de regiones k debe estar entre 1 y la cantidad total de vértices.");
+			throw new IllegalArgumentException(
+					"El número de regiones k debe estar entre 1 y la cantidad total de vértices.");
 		}
 
 		Grafo agm = calcularAGM(grafo);
 		List<Arista> aristasAGM = new ArrayList<>(agm.obtenerTodasAristas());
+
 		if (aristasAGM.size() != vertices.size() - 1) {
-			throw new IllegalArgumentException(
-					"El grafo debe ser conexo para generar regiones"
-					);
+			throw new IllegalArgumentException("El grafo debe ser conexo para generar regiones");
 		}
 		aristasAGM.sort(Comparator.comparingDouble(Arista::getPeso));
 
@@ -64,7 +62,9 @@ public class TeoremaKruskal {
 
 		for (Vertice v : vertices) {
 			Vertice representante = ufRegiones.buscar(v);
+
 			regionesMap.putIfAbsent(representante, new ArrayList<>());
+
 			regionesMap.get(representante).add(v);
 		}
 
