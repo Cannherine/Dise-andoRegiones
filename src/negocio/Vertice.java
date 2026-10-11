@@ -4,9 +4,7 @@ public class Vertice {
 	private String nombre; 
 	private double x;
 	private double y;
-	public Vertice(String nombre) {
-		this.nombre = nombre;
-	}
+
 	public Vertice(String nombre, double x, double y) {
 		this.nombre = nombre;
 		this.x = x;

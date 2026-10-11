@@ -93,15 +93,12 @@ public class VentanaPrincipal extends JFrame {
 			terminacion = "CARGADAS";
 			break;
 
-
 		default:
 			singular = "Territorio";
 			plural = "TERRITORIOS";
 			terminacion = "CARGADOS";
 			break;
 		}
-
-
 
 		setTitle("Diseñando Regiones");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -177,7 +174,7 @@ public class VentanaPrincipal extends JFrame {
 		panelProvincias.add(scrollCiudades, BorderLayout.CENTER);
 
 		panelLista.add(panelProvincias);
-		//// agregre esto para las listas 
+		//// agregre esto para las listas
 
 		JPanel panelConexionesLista = new JPanel();
 		panelConexionesLista.setLayout(new BorderLayout(5, 5));
@@ -192,12 +189,11 @@ public class VentanaPrincipal extends JFrame {
 		JScrollPane scrollConexiones = new JScrollPane(listaConexiones);
 		panelConexionesLista.add(scrollConexiones, BorderLayout.CENTER);
 
-		//panelConexionesLista.setPreferredSize(
-		//    new java.awt.Dimension(0, 115)
-		//);
+		// panelConexionesLista.setPreferredSize(
+		// new java.awt.Dimension(0, 115)
+		// );
 		panelLista.add(panelConexionesLista);
 		panelLista.add(panelConexionesLista, BorderLayout.SOUTH);
-
 
 		JPanel panelConexion = new JPanel();
 		panelContenido.add(panelConexion, BorderLayout.SOUTH);
@@ -227,7 +223,7 @@ public class VentanaPrincipal extends JFrame {
 		JButton botonGenerarRegiones = new JButton("Generar Regiones");
 		panelConexion.add(new JLabel(""));
 		panelConexion.add(botonGenerarRegiones);
-		//// para el born de la lista regiones 
+		//// para el born de la lista regiones
 		JButton botonConsultarRegiones = new JButton("Consultar Regiones");
 		panelConexion.add(new JLabel(""));
 		panelConexion.add(botonConsultarRegiones);
@@ -240,9 +236,7 @@ public class VentanaPrincipal extends JFrame {
 		panelResultados.setLayout(new BorderLayout());
 		mapa = new JMapViewer();
 		panelResultados.add(mapa, BorderLayout.CENTER);
-		mapa.setDisplayPosition(new Coordinate (latitud, longitud),6);
-
-
+		mapa.setDisplayPosition(new Coordinate(latitud, longitud), 6);
 
 		JLabel lblResultados = new JLabel("MAPA");
 		panelResultados.add(lblResultados, BorderLayout.NORTH);
@@ -279,10 +273,11 @@ public class VentanaPrincipal extends JFrame {
 					txtX.setText("");
 					txtY.setText("");
 				} else {
-					JOptionPane.showMessageDialog(this, singular + " ya existe");                }
+					JOptionPane.showMessageDialog(this, singular + " ya existe");
+				}
 
 			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(this,"Las coordenadas deben ser números decimales");
+				JOptionPane.showMessageDialog(this, "Las coordenadas deben ser números decimales");
 			}
 		});
 		botonAgregarConexion.addActionListener(e -> {
@@ -291,7 +286,7 @@ public class VentanaPrincipal extends JFrame {
 			Vertice v2 = (Vertice) comboCiudad2.getSelectedItem();
 
 			if (v1 == null || v2 == null) {
-				JOptionPane.showMessageDialog(this,"Primero tenés que agregar dos vértices");
+				JOptionPane.showMessageDialog(this, "Primero tenés que agregar dos vértices");
 				return;
 			}
 
@@ -309,8 +304,8 @@ public class VentanaPrincipal extends JFrame {
 				if (agregada) {
 
 					dibujarConexion(v1, v2);
-					modeloConexiones.addElement( v1.getNombre() + " - " +  v2.getNombre() + " | Peso: " + peso 	);
-					JOptionPane.showMessageDialog(this,   "Conexión agregada correctamente");
+					modeloConexiones.addElement(v1.getNombre() + " - " + v2.getNombre() + " | Peso: " + peso);
+					JOptionPane.showMessageDialog(this, "Conexión agregada correctamente");
 
 					txtPeso.setText("");
 
@@ -319,15 +314,13 @@ public class VentanaPrincipal extends JFrame {
 				}
 
 			} catch (NumberFormatException ex) {
-				JOptionPane.showMessageDialog(null,"El peso debe ser un numero valido ");
+				JOptionPane.showMessageDialog(null, "El peso debe ser un numero valido ");
 			}
 
 		});
 		botonGenerarRegiones.addActionListener(e -> {
 
-			String entrada = JOptionPane.showInputDialog(
-					this, "¿Cuántas regiones querés generar?"
-					);
+			String entrada = JOptionPane.showInputDialog(this, "¿Cuántas regiones querés generar?");
 
 			if (entrada == null) {
 				return;
@@ -336,26 +329,27 @@ public class VentanaPrincipal extends JFrame {
 			try {
 				int k = Integer.parseInt(entrada.trim());
 
-				List<List<Vertice>> regiones =  TeoremaKruskal.generarRegiones(grafo, k);
+				List<List<Vertice>> regiones = TeoremaKruskal.generarRegiones(grafo, k);
 				regionesGuardadas = regiones; /// pasar a tadeob
 				colorearRegiones(regiones);
-				///pasar atade
+				/// pasar atade
 				actualizarAristasRegiones(regiones);
 				///
 				StringBuilder resultado = new StringBuilder();
 
 				for (int i = 0; i < regiones.size(); i++) {
 
-					resultado.append("REGIÓN ").append(i + 1)  .append(":\n");
+					resultado.append("REGIÓN ").append(i + 1).append(":\n");
 
 					for (Vertice v : regiones.get(i)) {
-						resultado.append(" - ").append(v.getNombre()) .append("\n");
+						resultado.append(" - ").append(v.getNombre()).append("\n");
 					}
 
 					resultado.append("\n");
 				}
 
-				//JOptionPane.showMessageDialog(this, resultado.toString(), "Regiones generadas",  JOptionPane.INFORMATION_MESSAGE);
+				// JOptionPane.showMessageDialog(this, resultado.toString(), "Regiones
+				// generadas", JOptionPane.INFORMATION_MESSAGE);
 				JTextArea areaResultado = new JTextArea(resultado.toString());
 
 				areaResultado.setEditable(false);
@@ -364,29 +358,23 @@ public class VentanaPrincipal extends JFrame {
 
 				JScrollPane scrollResultado = new JScrollPane(areaResultado);
 
-				scrollResultado.setPreferredSize(
-				    new java.awt.Dimension(400, 350)
-				);
+				scrollResultado.setPreferredSize(new java.awt.Dimension(400, 350));
 
-				JOptionPane.showMessageDialog(
-				    this,
-				    scrollResultado,
-				    "Regiones generadas",
-				    JOptionPane.INFORMATION_MESSAGE
-				);
+				JOptionPane.showMessageDialog(this, scrollResultado, "Regiones generadas",
+						JOptionPane.INFORMATION_MESSAGE);
 
 			} catch (NumberFormatException ex) {
 				JOptionPane.showMessageDialog(this, "Ingresá un número entero para k");
 
 			} catch (IllegalArgumentException ex) {
-				JOptionPane.showMessageDialog(this,  ex.getMessage());
+				JOptionPane.showMessageDialog(this, ex.getMessage());
 			}
-		});      
+		});
 
 		botonConsultarRegiones.addActionListener(e -> {
 
 			if (regionesGuardadas == null) {
-				JOptionPane.showMessageDialog( this, "Primero debés generar las regiones." );
+				JOptionPane.showMessageDialog(this, "Primero debés generar las regiones.");
 				return;
 			}
 
@@ -394,17 +382,18 @@ public class VentanaPrincipal extends JFrame {
 
 			for (int i = 0; i < regionesGuardadas.size(); i++) {
 
-				resultado.append("REGIÓN ") .append(i + 1) .append(":\n");
+				resultado.append("REGIÓN ").append(i + 1).append(":\n");
 
 				for (Vertice v : regionesGuardadas.get(i)) {
-					resultado.append(" - ") .append(v.getNombre()).append("\n");
+					resultado.append(" - ").append(v.getNombre()).append("\n");
 				}
 
 				resultado.append("\n");
 			}
 
-			//JOptionPane.showMessageDialog(
-					//this, resultado.toString(),"Consultar Regiones", JOptionPane.INFORMATION_MESSAGE );
+			// JOptionPane.showMessageDialog(
+			// this, resultado.toString(),"Consultar Regiones",
+			// JOptionPane.INFORMATION_MESSAGE );
 			JTextArea areaConsulta = new JTextArea(resultado.toString());
 
 			areaConsulta.setEditable(false);
@@ -414,97 +403,94 @@ public class VentanaPrincipal extends JFrame {
 
 			JScrollPane scrollConsulta = new JScrollPane(areaConsulta);
 
-			scrollConsulta.setPreferredSize(
-			    new java.awt.Dimension(400, 350)
-			);
+			scrollConsulta.setPreferredSize(new java.awt.Dimension(400, 350));
 
-			JOptionPane.showMessageDialog( this, scrollConsulta, "Consultar Regiones",  JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, scrollConsulta, "Consultar Regiones", JOptionPane.INFORMATION_MESSAGE);
 
-			
 		});
 
-botonCargarArchivo.addActionListener(e -> {
-    File archivo = new File("VerticesYAristasDeArgentina.txt");
 
-    try {
-        grafo = CargarArchivo.cargarDesdeArchivo(archivo);
+		botonCargarArchivo.addActionListener(e -> {
 
-		            // Limpiar las listas anteriores
-		            modeloCiudades.clear();
-		            modeloConexiones.clear();
+			JFileChooser selector = new JFileChooser();
+			selector.setDialogTitle("Seleccionar archivo CSV");
 
-		            comboCiudad1.removeAllItems();
-		            comboCiudad2.removeAllItems();
+			int resultado = selector.showOpenDialog(this);
 
-		            // Limpiar los elementos anteriores del mapa
-		            mapa.removeAllMapMarkers();
-		            mapa.removeAllMapPolygons();
+			if (resultado == JFileChooser.APPROVE_OPTION) {
 
-		            // Las regiones anteriores ya no corresponden al nuevo grafo
-		            regionesGuardadas = null;
+				File archivo = selector.getSelectedFile();
 
-		            // Cargar los vértices en la interfaz y en el mapa
-		            for (Vertice vertice : grafo.obtenerVertices()) {
+				try {
 
-		                modeloCiudades.addElement(vertice.getNombre());
+					grafo = CargarArchivo.cargarDesdeArchivo(archivo);
 
-		                comboCiudad1.addItem(vertice);
-		                comboCiudad2.addItem(vertice);
+					// Limpiar las listas anteriores
+					modeloCiudades.clear();
+					modeloConexiones.clear();
 
-		                MapMarkerDot marcador = new MapMarkerDot(
-		                    vertice.getNombre(),
-		                    new Coordinate(vertice.getX(), vertice.getY())
-		                );
+					comboCiudad1.removeAllItems();
+					comboCiudad2.removeAllItems();
 
-		                mapa.addMapMarker(marcador);
-		            }
+					// Limpiar los elementos anteriores del mapa
+					mapa.removeAllMapMarkers();
+					mapa.removeAllMapPolygons();
 
-		            // Cargar las aristas en la lista y dibujarlas
-		            for (Arista arista : grafo.obtenerTodasAristas()) {
+					// Las regiones anteriores ya no corresponden al nuevo grafo
+					regionesGuardadas = null;
 
-		                Vertice v1 = arista.getVertice1();
-		                Vertice v2 = arista.getVertice2();
+					// Cargar los vértices en la interfaz y en el mapa
+					for (Vertice vertice : grafo.obtenerVertices()) {
 
-		                modeloConexiones.addElement(
-		                    v1.getNombre() + " - " +
-		                    v2.getNombre() + " | Peso: " +
-		                    arista.getPeso()
-		                );
+						modeloCiudades.addElement(vertice.getNombre());
 
-		                dibujarConexion(v1, v2);
-		            }
+						comboCiudad1.addItem(vertice);
+						comboCiudad2.addItem(vertice);
 
-		            mapa.repaint();
+						MapMarkerDot marcador = new MapMarkerDot(vertice.getNombre(),
+								new Coordinate(vertice.getX(), vertice.getY()));
 
-		            JOptionPane.showMessageDialog(
-		                this,
-		                "Archivo cargado correctamente.",
-		                "Carga exitosa",
-		                JOptionPane.INFORMATION_MESSAGE
-		            );
+						mapa.addMapMarker(marcador);
+					}
 
-    } catch (IOException ex) {
-        JOptionPane.showMessageDialog(
-            this,
-            "Error al cargar el archivo:\n" + ex.getMessage(),
-            "Error",
-            JOptionPane.ERROR_MESSAGE
-        );
-    }
-});
+					// Cargar las aristas en la lista y dibujarlas
+					for (Arista arista : grafo.obtenerTodasAristas()) {
 
+						Vertice v1 = arista.getVertice1();
+						Vertice v2 = arista.getVertice2();
+
+						modeloConexiones
+								.addElement(v1.getNombre() + " - " + v2.getNombre() + " | Peso: " + arista.getPeso());
+
+						dibujarConexion(v1, v2);
+					}
+
+					mapa.repaint();
+
+					JOptionPane.showMessageDialog(this, "Archivo cargado correctamente.", "Carga exitosa",
+							JOptionPane.INFORMATION_MESSAGE);
+
+				} catch (IOException ex) {
+
+					JOptionPane.showMessageDialog(this, "Error al cargar el archivo:\n" + ex.getMessage(),
+							"Error de lectura", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 
 	}
+
 	private void dibujarConexion(Vertice v1, Vertice v2) {
 
 		Coordinate punto1 = new Coordinate(v1.getX(), v1.getY());
 		Coordinate punto2 = new Coordinate(v2.getX(), v2.getY());
 
-		MapPolygonImpl linea = new MapPolygonImpl( Arrays.asList(punto1, punto2, punto2));
+		MapPolygonImpl linea = new MapPolygonImpl(Arrays.asList(punto1, punto2, punto2));
 
 		mapa.addMapPolygon(linea);
 		mapa.repaint();
 	}
+
 	private void actualizarAristasRegiones(List<List<Vertice>> regiones) {
 		mapa.removeAllMapPolygons();
 		Grafo agm = TeoremaKruskal.calcularAGM(grafo);
@@ -526,20 +512,16 @@ botonCargarArchivo.addActionListener(e -> {
 
 	private void colorearRegiones(List<List<Vertice>> regiones) {
 
-		/*  Color[] colores = {
-              Color.RED,
-              Color.BLUE,
-              Color.GREEN,
-              Color.ORANGE,
-              Color.MAGENTA,
-              Color.CYAN
-          };*/
+		/*
+		 * Color[] colores = { Color.RED, Color.BLUE, Color.GREEN, Color.ORANGE,
+		 * Color.MAGENTA, Color.CYAN };
+		 */
 
 		Map<Vertice, Color> colorPorVertice = new HashMap<>();
 		int cantidadRegiones = regiones.size();
 
 		for (int i = 0; i < cantidadRegiones; i++) {
-			Color color = Color.getHSBColor( (float) i / cantidadRegiones, 0.8f,0.9f );
+			Color color = Color.getHSBColor((float) i / cantidadRegiones, 0.8f, 0.9f);
 
 			for (Vertice vertice : regiones.get(i)) {
 				colorPorVertice.put(vertice, color);
@@ -549,10 +531,8 @@ botonCargarArchivo.addActionListener(e -> {
 		mapa.removeAllMapMarkers();
 
 		for (Vertice vertice : grafo.obtenerVertices()) {
-			MapMarkerDot marcador = new MapMarkerDot(
-					vertice.getNombre(),
-					new Coordinate(vertice.getX(), vertice.getY())
-					);
+			MapMarkerDot marcador = new MapMarkerDot(vertice.getNombre(),
+					new Coordinate(vertice.getX(), vertice.getY()));
 
 			marcador.setBackColor(colorPorVertice.get(vertice));
 			mapa.addMapMarker(marcador);
