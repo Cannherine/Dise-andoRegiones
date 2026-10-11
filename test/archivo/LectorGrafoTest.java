@@ -31,6 +31,9 @@ class LectorGrafoTest {
 		Grafo grafo = LectorGrafo.cargarDesdeArchivo(archivo);
 
 		assertNotNull(grafo);
+		assertEquals(2, grafo.obtenerVertices().size());
+		assertEquals(1, grafo.obtenerTodasAristas().size());
+		assertEquals(650.5, grafo.obtenerTodasAristas().get(0).getPeso(), 0.000001);
 	}
 
 	@Test
@@ -149,4 +152,6 @@ class LectorGrafoTest {
 
 		assertTrue(excepcion.getMessage().contains("Tipo de registro desconocido."));
 	}
+
+
 }

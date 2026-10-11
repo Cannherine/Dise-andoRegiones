@@ -22,6 +22,8 @@ public class EstiloInterfaz {
 	public static final Color GRIS = new Color(71, 85, 105);
 	public static final Color ROJO = new Color(220, 38, 38);
 	public static final Color NARANJA = new Color(217, 119, 6);
+	public static final Color FONDO_LISTA = new Color(225, 237, 250);
+	public static final Color TEXTO_LISTA = new Color(30, 58, 95);
 
 	private EstiloInterfaz() {
 
@@ -62,7 +64,7 @@ public class EstiloInterfaz {
 		}
 
 		if (componente instanceof JList) {
-			componente.setBackground(new Color(225, 237, 250));
+			componente.setBackground(FONDO_LISTA);
 			componente.setForeground(AZUL_OSCURO);
 		}
 
@@ -73,7 +75,7 @@ public class EstiloInterfaz {
 
 		if (componente instanceof JScrollPane) {
 			componente.setBackground(FONDO);
-			((JScrollPane) componente).getViewport().setBackground(new Color(225, 237, 250));
+			((JScrollPane) componente).getViewport() .setBackground(FONDO_LISTA);
 		}
 
 		if (componente instanceof Container) {

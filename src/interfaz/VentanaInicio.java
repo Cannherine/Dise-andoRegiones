@@ -35,105 +35,138 @@ public class VentanaInicio extends JFrame {
 	}
 
 	public VentanaInicio() {
-
-		setTitle("Bienvenido - Diseñando Regiones");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 600, 420);
-		setLocationRelativeTo(null);
-		setResizable(false);
+		
+		configurarVentana();
 		contentPane = new JPanel();
 		contentPane.setBackground(EstiloInterfaz.FONDO);
 		contentPane.setBorder(new EmptyBorder(20, 20, 20, 20));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(15, 15));
 
+		crearPanelTitulo();
+
+		JPanel panelCentral = crearPanelCentral();
+		contentPane.add(panelCentral, BorderLayout.CENTER);
+
+		panelCentral.add(crearDescripcion(), BorderLayout.NORTH);
+		panelCentral.add(crearPanelDatos(), BorderLayout.CENTER);
+		crearPanelBoton();
+	}
+
+	
+	private void configurarVentana() {
+		setTitle("Bienvenido - Diseñando Regiones");
+	    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    setBounds(100, 100, 600, 420);
+	    setLocationRelativeTo(null);
+	    setResizable(false);		
+	}
+
+	private void crearPanelTitulo() {
+
 		JPanel panelTitulo = new JPanel();
 		panelTitulo.setBackground(EstiloInterfaz.AZUL_OSCURO);
-
 		contentPane.add(panelTitulo, BorderLayout.NORTH);
 
 		JLabel lblTitulo = new JLabel("BIENVENIDO A DISEÑANDO REGIONES");
 		lblTitulo.setForeground(Color.WHITE);
 		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 18));
+
 		panelTitulo.add(lblTitulo);
+	}
+
+	private JPanel crearPanelCentral() {
 
 		JPanel panelCentral = new JPanel();
-		panelCentral.setBackground(new Color(232, 241, 250));
-		contentPane.add(panelCentral, BorderLayout.CENTER);
+		panelCentral.setBackground(EstiloInterfaz.FONDO);
 		panelCentral.setLayout(new BorderLayout(10, 15));
 
-		JLabel lblDescripcion = new JLabel(
-				"<html><center>" + "Este programa permite construir un grafo de territorios, "
-						+ "establecer conexiones con pesos de similitud "
-						+ "y agruparlos en regiones utilizando el algoritmo de Kruskal." + "</center></html>");
-		lblDescripcion.setFont(new Font("Segoe UI", Font.PLAIN, 13));
-		lblDescripcion.setForeground(new Color(25, 54, 91));
-		panelCentral.add(lblDescripcion, BorderLayout.NORTH);
-
-		JPanel panelDatos = new JPanel();
-		panelDatos.setBackground(new Color(232, 241, 250));
-		panelCentral.add(panelDatos, BorderLayout.CENTER);
-		panelDatos.setLayout(new GridLayout(4, 2, 10, 15));
-
-		JLabel lblTipo = new JLabel("Tipo de territorio:");
-		panelDatos.add(lblTipo);
-
-		comboTipo = new JComboBox<>();
-		comboTipo.addItem("Continente");
-		comboTipo.addItem("País");
-		comboTipo.addItem("Provincia");
-		comboTipo.setSelectedIndex(-1);
-		panelDatos.add(comboTipo);
-
-		JLabel lblTerritorio = new JLabel("Área de estudio:");
-		panelDatos.add(lblTerritorio);
-
-		txtTerritorio = new JTextField();
-		panelDatos.add(txtTerritorio);
-
-		JLabel lblLatitud = new JLabel("Latitud del centro:");
-		panelDatos.add(lblLatitud);
-
-		txtLatitud = new JTextField();
-		panelDatos.add(txtLatitud);
-
-		JLabel lblLongitud = new JLabel("Longitud del centro:");
-		panelDatos.add(lblLongitud);
-
-		txtLongitud = new JTextField();
-		panelDatos.add(txtLongitud);
-		Font fuenteEtiquetas = new Font("Segoe UI", Font.BOLD, 13);
-
-		Color colorEtiquetas = new Color(25, 54, 91);
-
-		lblTipo.setFont(fuenteEtiquetas);
-		lblTipo.setForeground(colorEtiquetas);
-
-		lblTerritorio.setFont(fuenteEtiquetas);
-		lblTerritorio.setForeground(colorEtiquetas);
-
-		lblLatitud.setFont(fuenteEtiquetas);
-		lblLatitud.setForeground(colorEtiquetas);
-
-		lblLongitud.setFont(fuenteEtiquetas);
-		lblLongitud.setForeground(colorEtiquetas);
-
-		JPanel panelBoton = new JPanel();
-		panelBoton.setBackground(new Color(232, 241, 250));
-		contentPane.add(panelBoton, BorderLayout.SOUTH);
-
-		JButton botonContinuar = new JButton("Continuar");
-
-		botonContinuar.setBackground(new Color(22, 163, 74));
-		botonContinuar.setForeground(Color.WHITE);
-		botonContinuar.setFont(new Font("Segoe UI", Font.BOLD, 14));
-		botonContinuar.setFocusPainted(false);
-		panelBoton.add(botonContinuar);
-
-		botonContinuar.addActionListener(e -> continuar());
-
-		getRootPane().setDefaultButton(botonContinuar);
+		return panelCentral;
 	}
+
+	private JLabel crearDescripcion() {
+		JLabel lblDescripcion = new JLabel(
+				"<html><center>"
+						+ "Este programa permite construir un grafo de territorios, "
+						+ "establecer conexiones con pesos de similitud "
+						+ "y agruparlos en regiones utilizando el algoritmo de Kruskal."
+						+ "</center></html>");
+
+		lblDescripcion.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		lblDescripcion.setForeground(EstiloInterfaz.AZUL_OSCURO);
+
+		return lblDescripcion;
+	}
+
+
+private JPanel crearPanelDatos() {
+
+    JPanel panelDatos = new JPanel();
+    panelDatos.setBackground(EstiloInterfaz.FONDO);
+    panelDatos.setLayout(new GridLayout(4, 2, 10, 15));
+
+    Font fuenteEtiquetas = new Font("Segoe UI", Font.BOLD, 13);
+    Color colorEtiquetas = EstiloInterfaz.AZUL_OSCURO;
+
+    JLabel lblTipo = new JLabel("Tipo de territorio:");
+    lblTipo.setFont(fuenteEtiquetas);
+    lblTipo.setForeground(colorEtiquetas);
+    panelDatos.add(lblTipo);
+
+    comboTipo = new JComboBox<>();
+    comboTipo.addItem("Continente");
+    comboTipo.addItem("País");
+    comboTipo.addItem("Provincia");
+    comboTipo.setSelectedIndex(-1);
+    panelDatos.add(comboTipo);
+
+    JLabel lblTerritorio = new JLabel("Área de estudio:");
+    lblTerritorio.setFont(fuenteEtiquetas);
+    lblTerritorio.setForeground(colorEtiquetas);
+    panelDatos.add(lblTerritorio);
+
+    txtTerritorio = new JTextField();
+    panelDatos.add(txtTerritorio);
+
+    JLabel lblLatitud = new JLabel("Latitud del centro:");
+    lblLatitud.setFont(fuenteEtiquetas);
+    lblLatitud.setForeground(colorEtiquetas);
+    panelDatos.add(lblLatitud);
+
+    txtLatitud = new JTextField();
+    panelDatos.add(txtLatitud);
+
+    JLabel lblLongitud = new JLabel("Longitud del centro:");
+    lblLongitud.setFont(fuenteEtiquetas);
+    lblLongitud.setForeground(colorEtiquetas);
+    panelDatos.add(lblLongitud);
+
+    txtLongitud = new JTextField();
+    panelDatos.add(txtLongitud);
+
+    return panelDatos;
+}
+
+
+private void crearPanelBoton() {
+
+	JPanel panelBoton = new JPanel();
+	panelBoton.setBackground(EstiloInterfaz.FONDO);
+	contentPane.add(panelBoton, BorderLayout.SOUTH);
+
+	JButton botonContinuar = new JButton("Continuar");
+
+	botonContinuar.setBackground(EstiloInterfaz.VERDE);
+	botonContinuar.setForeground(Color.WHITE);
+	botonContinuar.setFont(new Font("Segoe UI", Font.BOLD, 14));
+	botonContinuar.setFocusPainted(false);
+
+	panelBoton.add(botonContinuar);
+
+	botonContinuar.addActionListener(e -> continuar());
+
+	getRootPane().setDefaultButton(botonContinuar);
+}
 
 	private void continuar() {
 

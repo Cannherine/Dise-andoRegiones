@@ -62,8 +62,7 @@ public class LectorGrafo {
 							throw new IllegalArgumentException("Vértice repetido: " + nombre);
 						}
 
-						vertices.put(nombre, vertice);
-
+						vertices.put(nombre.toLowerCase(java.util.Locale.ROOT), vertice);
 					} else if (datos[0].trim().equalsIgnoreCase("ARISTA")) {
 
 						if (datos.length != 4) {
@@ -79,8 +78,8 @@ public class LectorGrafo {
 							throw new IllegalArgumentException("El peso debe ser finito.");
 						}
 
-						Vertice v1 = vertices.get(nombre1);
-						Vertice v2 = vertices.get(nombre2);
+						Vertice v1 = vertices.get(nombre1.toLowerCase(java.util.Locale.ROOT));
+						Vertice v2 = vertices.get(nombre2.toLowerCase(java.util.Locale.ROOT));
 
 						if (v1 == null || v2 == null) {
 							throw new IllegalArgumentException("La arista utiliza un vértice no cargado.");

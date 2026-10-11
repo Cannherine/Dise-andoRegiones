@@ -66,4 +66,22 @@ class VerticeTest {
 		assertEquals(250, v.getX());
 		assertEquals(180, v.getY());
 	}
+
+	@Test
+	void verticesConMismoNombreYDistintasCoordenadasSonIguales() {
+		Vertice v1 = new Vertice("A", 0, 0);
+		Vertice v2 = new Vertice("A", 10, 20);
+
+		assertEquals(v1, v2);
+	}
+
+	@Test
+	void verticesConMayusculasDiferentesSonIgualesYMismoHashCode() {
+		Vertice v1 = new Vertice("Buenos Aires", 0, 0);
+		Vertice v2 = new Vertice("BUENOS AIRES", 10, 20);
+
+		assertEquals(v1, v2);
+		assertEquals(v1.hashCode(), v2.hashCode());
+	}
+
 }

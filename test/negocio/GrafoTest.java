@@ -72,6 +72,7 @@ class GrafoTest {
 		assertTrue(grafo.agregarArista(ab));
 
 		assertFalse(grafo.agregarArista(ba));
+		assertEquals(1, grafo.obtenerTodasAristas().size());
 	}
 
 	@Test
@@ -116,8 +117,8 @@ class GrafoTest {
 	}
 
 	@Test
-	void obtenerAristasDeVerticeInexistenteDevuelveNull() {
-		assertThrows(IllegalArgumentException.class, () -> grafo.obtenerAristas(a));
+	void obtenerAristasDeVerticeInexistenteLanzaExcepcion()	{	
+	assertThrows(IllegalArgumentException.class, () -> grafo.obtenerAristas(a));
 	}
 
 	@Test
@@ -125,4 +126,5 @@ class GrafoTest {
 
 		assertTrue(grafo.obtenerTodasAristas().isEmpty());
 	}
+
 }

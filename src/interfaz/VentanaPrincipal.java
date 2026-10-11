@@ -63,7 +63,7 @@ public class VentanaPrincipal extends JFrame {
 			terminacion = "CARGADOS";
 			break;
 
-		case "Pais":
+		case "País":
 			singular = "Provincia";
 			plural = "PROVINCIAS";
 			terminacion = "CARGADAS";
@@ -82,24 +82,14 @@ public class VentanaPrincipal extends JFrame {
 			break;
 		}
 
-		setTitle("Diseñando Regiones");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1100, 720);
-		setLocationRelativeTo(null);
-		setResizable(false);
+		configurarVentana();
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(232, 241, 250));
+		contentPane.setBackground(EstiloInterfaz.FONDO);
 		contentPane.setBorder(new EmptyBorder(10, 10, 10, 10));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(10, 10));
 
-		JPanel panelTitulo = new JPanel();
-		panelTitulo.setBackground(new Color(25, 54, 91));
-		contentPane.add(panelTitulo, BorderLayout.NORTH);
-		JLabel lblTitulo = new JLabel("DISEÑANDO REGIONES");
-		lblTitulo.setForeground(Color.WHITE);
-		lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
-		panelTitulo.add(lblTitulo);
+		crearPanelTitulo();
 
 		JPanel panelCentral = new JPanel();
 		contentPane.add(panelCentral, BorderLayout.CENTER);
@@ -111,7 +101,7 @@ public class VentanaPrincipal extends JFrame {
 
 		JLabel lblCarga = new JLabel("CARGA DEL GRAFO");
 		lblCarga.setFont(new Font("Segoe UI", Font.BOLD, 14));
-		lblCarga.setForeground(new Color(25, 54, 91));
+		lblCarga.setForeground(EstiloInterfaz.AZUL_OSCURO);
 		panelCarga.add(lblCarga, BorderLayout.NORTH);
 
 		JPanel panelContenido = new JPanel();
@@ -157,8 +147,8 @@ public class VentanaPrincipal extends JFrame {
 
 		modeloLugares = new DefaultListModel<>();
 		listaLugares = new JList<>(modeloLugares);
-		listaLugares.setBackground(new Color(225, 237, 250));
-		listaLugares.setForeground(new Color(30, 58, 95));
+		listaLugares.setBackground(EstiloInterfaz.FONDO_LISTA);
+		listaLugares.setForeground(EstiloInterfaz.TEXTO_LISTA);
 		listaLugares.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 
 		JScrollPane scrollLugares = new JScrollPane(listaLugares);
@@ -171,14 +161,14 @@ public class VentanaPrincipal extends JFrame {
 
 		JLabel lblConexiones = new JLabel("CONEXIONES Y PESOS");
 		lblConexiones.setFont(new Font("Segoe UI", Font.BOLD, 13));
-		lblConexiones.setForeground(new Color(25, 54, 91));
+		lblCarga.setForeground(EstiloInterfaz.AZUL_OSCURO);
 		panelConexionesLista.add(lblConexiones, BorderLayout.NORTH);
 
 		modeloConexiones = new DefaultListModel<>();
 
 		JList<String> listaConexiones = new JList<>(modeloConexiones);
-		listaConexiones.setBackground(new Color(225, 237, 250));
-		listaConexiones.setForeground(new Color(30, 58, 95));
+		listaConexiones.setBackground(EstiloInterfaz.FONDO_LISTA);
+		listaConexiones.setForeground(EstiloInterfaz.TEXTO_LISTA);
 		listaConexiones.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 
 		JScrollPane scrollConexiones = new JScrollPane(listaConexiones);
@@ -240,11 +230,10 @@ public class VentanaPrincipal extends JFrame {
 
 		JLabel lblResultados = new JLabel("MAPA");
 		lblResultados.setFont(new Font("Segoe UI", Font.BOLD, 14));
-		lblResultados.setForeground(new Color(25, 54, 91));
+		lblCarga.setForeground(EstiloInterfaz.AZUL_OSCURO);
 		panelResultados.add(lblResultados, BorderLayout.NORTH);
 
-		Color fondo = new Color(232, 241, 250);
-
+		Color fondo = EstiloInterfaz.FONDO;
 		contentPane.setBackground(fondo);
 		panelCentral.setBackground(fondo);
 		panelCarga.setBackground(fondo);
@@ -260,10 +249,39 @@ public class VentanaPrincipal extends JFrame {
 		panelResultados.setBackground(fondo);
 
 
+		configurarEventos( botonAgregarLugares,botonAgregarConexion, botonGenerarRegiones,botonConsultarRegiones, botonCargarArchivo,singular);
+	}
+	
+	private void configurarVentana() {
+		setTitle("Diseñando Regiones");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 1100, 720);
+		setLocationRelativeTo(null);
+		setResizable(false);
+	}
+
+	private void crearPanelTitulo() {
+		JPanel panelTitulo = new JPanel();
+	    panelTitulo.setBackground(EstiloInterfaz.AZUL_OSCURO);
+	    contentPane.add(panelTitulo, BorderLayout.NORTH);
+
+	    JLabel lblTitulo = new JLabel("DISEÑANDO REGIONES");
+	    lblTitulo.setForeground(Color.WHITE);
+	    lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 22));
+
+	    panelTitulo.add(lblTitulo);
+	}
+
+	private void configurarEventos( JButton botonAgregarLugares, JButton botonAgregarConexion,JButton botonGenerarRegiones,JButton botonConsultarRegiones, JButton botonCargarArchivo,String singular) {
+
 		botonAgregarLugares.addActionListener(e -> agregarLugar(singular));
+
 		botonAgregarConexion.addActionListener(e -> agregarConexion());
+
 		botonGenerarRegiones.addActionListener(e -> generarRegiones());
+
 		botonConsultarRegiones.addActionListener(e -> consultarRegiones());
+
 		botonCargarArchivo.addActionListener(e -> cargarArchivo());
 	}
 
@@ -359,7 +377,10 @@ public class VentanaPrincipal extends JFrame {
 
 		try {
 			double peso = Double.parseDouble(txtPeso.getText().trim());
-
+			if (!Double.isFinite(peso)) {
+			    Notificaciones.error(this, "El peso debe ser un número válido y finito");
+			    return;
+			}
 			Arista arista = new Arista(v1, v2, peso);
 			boolean agregada = grafo.agregarArista(arista);
 
@@ -488,10 +509,15 @@ public class VentanaPrincipal extends JFrame {
 			colorearRegiones(regiones);
 			actualizarAristasRegiones(regiones);
 
+
 		} catch (IllegalArgumentException ex) {
 			regionesGuardadas = null;
-			Notificaciones.advertencia(this, "No se pudieron recalcular las regiones: " + ex.getMessage());
+			actualizarVistaGrafo();
+
+			Notificaciones.advertencia(this,
+					"No se pudieron recalcular las regiones: " + ex.getMessage());
 		}
+
 	}
 
 	private void cargarArchivo() {
