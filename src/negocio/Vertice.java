@@ -7,6 +7,7 @@ public class Vertice {
 	private double y;
 
 	public Vertice(String nombre, double x, double y) {
+		
 		this.nombre = nombre;
 		this.x = x;
 		this.y = y;
